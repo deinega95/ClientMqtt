@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_background_dark"
+>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/main_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addressBroker"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/hint"
+                android:hint="@string/address_broker"
+                android:paddingTop="4dp"
+                android:textColor="@color/main_text_dark"
+                android:background="@null"
+                android:text="tcp://192.168.1.232:1883"
+        />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/main_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name"
+                android:layout_marginLeft="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/hint"
+                android:hint="@string/name"
+                android:textColor="@color/main_text_dark"
+                android:background="@null"
+        />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+            android:id="@+id/connectBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text_light"
+            android:background="@color/colorPrimary"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="40dp"
+            android:textAllCaps="false"
+            android:text="@string/connect"
+
+    />
+
+</LinearLayout>
