@@ -33,16 +33,13 @@ ext{
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
     implementation "com.google.android.material:material:$materialVersion"
-
-
     implementation "org.eclipse.paho:org.eclipse.paho.client.mqttv3:$pahoVersion"
     implementation "org.eclipse.paho:org.eclipse.paho.android.service:$pahoAndroidVersion"
-
     implementation "com.google.dagger:dagger:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
-
+    implementation 'com.google.android:support-v4:r7'
 }
