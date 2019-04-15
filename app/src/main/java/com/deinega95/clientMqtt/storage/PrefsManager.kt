@@ -16,7 +16,8 @@ class PrefsManager @Inject constructor() {
 
         private const val NAME_PREFS = "Client_MQTT_NAME"
         private const val SERVER = "SERVER"
-        private const val CLIENT_ID = "CLIENT_ID"
+        private const val USERNAME = "USERNAME"
+        private const val PASSWORD = "CLIENT_ID"
     }
 
 
@@ -28,20 +29,27 @@ class PrefsManager @Inject constructor() {
         return sharedPreferences.getString(SERVER, null)
     }
 
-    fun getClientId(): String? {
+    fun getUsername(): String? {
 
-        return sharedPreferences.getString(CLIENT_ID, null)
+        return sharedPreferences.getString(USERNAME, null)
     }
 
-    fun saveServer(server: String, clientId: String) {
+    fun saveServer(server: String,username:String?, pass:String?) {
         sharedPreferences
             .edit()
             .putString(SERVER, server)
-            .putString(CLIENT_ID, clientId)
+            .putString(USERNAME, username)
+            .putString(PASSWORD, pass)
             .apply()
     }
 
     fun isAuthorized(): Boolean {
-        return (getServer()!=null && getClientId()!=null)
+        return (getServer()!=null && getUsername()!=null)
     }
+
+    fun getPassword(): String? {
+        return sharedPreferences.getString(PASSWORD, "")
+    }
+
+
 }

@@ -13,4 +13,5 @@ class AndroidModule(private val app: Application) {
     @ForApplication
     @Singleton
     internal fun provideApplicationContext() = app
+
 }

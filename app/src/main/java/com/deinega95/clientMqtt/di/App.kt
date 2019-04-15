@@ -42,4 +42,9 @@ class App : Application() {
         instance = this
     }
 
+    fun clear(){
+        mainComponent = null
+        authorizationComponent = null
+    }
+
 }

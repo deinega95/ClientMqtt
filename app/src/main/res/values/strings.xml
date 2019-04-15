@@ -5,4 +5,24 @@
     <string name="connect">Подключиться</string>
     <string name="enter_message">Введите сообщение</string>
     <string name="send">Отправить</string>
+
+    <string name="next">Продолжить</string>
+    <string name="error">Ошибка</string>
+    <string name="ok">Ок</string>
+
+    <string name="ready">Готово</string>
+    <string name="load_from_gallery">Загрузить из галереи</string>
+
+    <string name="not_access_galery">Необходимо дать доступ к памяти телефона</string>
+    <string name="password">Пароль</string>
+    <string name="username">Имя пользователя</string>
+    <string name="get_photo">Получить фото с камеры</string>
+    <string name="exit">Выйти</string>
+    <string name="settings">Настройки</string>
+    <string name="select_topic">Выбранные топики:</string>
+    <string name="messages">Сообщения:</string>
+    <string name="add_topic">Подписаться на топик</string>
+    <string name="name_topic">Имя топика</string>
+    <string name="new_topic">Подписка на топик</string>
+
 </resources>

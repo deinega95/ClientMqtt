@@ -8,7 +8,6 @@
     <color name="main_text_dark">#212529</color>
     <color name="main_text_light">#ffffff</color>
     <color name="hint">#868e96</color>
-    <color name="tab_not_active">#868e96</color>
     <color name="link_color">#005EFF</color>
     <color name="status_bar_color">#393E46</color>
     <color name="description_text">#868e96</color>

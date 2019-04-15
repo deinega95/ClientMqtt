@@ -9,8 +9,8 @@ import javax.inject.Singleton
 @Component(modules = [AndroidModule::class])
 @Singleton
 interface ApplicationComponent {
-    fun inject(baseActivity: MainActivity)
     fun getAuthorizationComponent(): AuthorizationComponent
     fun getMainComponent(): MainComponent
+    fun inject(baseActivity: BaseActivity)
 
 }

@@ -13,6 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -22,14 +23,17 @@ android {
     }
 }
 
-ext{
+ext {
     pahoVersion = '1.1.0'
     pahoAndroidVersion = '1.1.1'
     daggerVersion = '2.13'
     retrofitVersion = '2.21'
-    appcompatVersion = '1.1.0-alpha03'
-    materialVersion = '1.1.0-alpha04'
-
+    appcompatVersion = '1.1.0-alpha04'
+    materialVersion = '1.1.0-alpha05'
+    compressorVersion = '2.1.0'
+    gsonVersion = '2.8.5'
+    matDialogVersion = '2.6.0'
+    firebaseVersion = "16.0.8"
 }
 
 dependencies {
@@ -39,7 +43,22 @@ dependencies {
     implementation "com.google.android.material:material:$materialVersion"
     implementation "org.eclipse.paho:org.eclipse.paho.client.mqttv3:$pahoVersion"
     implementation "org.eclipse.paho:org.eclipse.paho.android.service:$pahoAndroidVersion"
+
+
+    implementation "id.zelory:compressor:$compressorVersion"
+
+
     implementation "com.google.dagger:dagger:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
-    implementation 'com.google.android:support-v4:r7'
+
+    implementation "com.afollestad.material-dialogs:core:$matDialogVersion"
+
+    implementation "com.google.code.gson:gson:$gsonVersion"
+
+  /*  implementation 'com.google.android:support-v4:r7'*/
+    implementation "com.google.firebase:firebase-core:$firebaseVersion"
+
+    implementation 'com.google.firebase:firebase-messaging:17.6.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
