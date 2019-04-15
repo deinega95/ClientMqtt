@@ -4,7 +4,7 @@ import com.deinega95.clientMqtt.di.App
 import com.deinega95.clientMqtt.model.Message
 import com.deinega95.clientMqtt.storage.PrefsManager
 import com.deinega95.clientMqtt.utils.MyLog
-import com.google.gson.GsonBuilder
+import com.google.gson.Gson
 import org.eclipse.paho.android.service.MqttAndroidClient
 import org.eclipse.paho.client.mqttv3.*
 import java.util.*
@@ -16,15 +16,16 @@ import javax.inject.Singleton
 class MqttService @Inject constructor() : Observable() {
 
     companion object {
-        const val TOPIC = "/smart-house/camera"
+        const val TOPIC = "/smart-house/devices"
+        const val SERVER_TOPIC = "/smart-house/camera"
     }
 
     @Inject
+    lateinit var gson: Gson
+    @Inject
     lateinit var prefsManager: PrefsManager
 
-    private val gson by lazy { GsonBuilder().create() }
     val topics = mutableListOf<String>()
-
     var client: MqttAndroidClient? = null
     private var messages = ArrayList<Message>()
 
@@ -73,7 +74,6 @@ class MqttService @Inject constructor() : Observable() {
 
             override fun messageArrived(topic: String?, mes: MqttMessage?) {
                 MyLog.show("messageArrived ${mes.toString()}")
-                MyLog.show("messageArrived ${mes!!.payload.toString()}")
 
                 val message = gson.fromJson(mes.toString(), Message::class.java)
                 messages.add(message)
@@ -132,11 +132,20 @@ class MqttService @Inject constructor() : Observable() {
         })
     }
 
-    fun sendMessage(message: String) {
+    fun sendMessage(message: Message) {
 
         val mes = gson.toJson(message)
         MyLog.show("send mes")
         client!!.publish(TOPIC, mes.toByteArray(), 2, true)
+    }
+
+    fun sendFirebaseToken(token: String) {
+        val tokenMes = Message()
+        tokenMes.type = "tokenFirebase"
+        tokenMes.text = token
+
+        val message = gson.toJson(tokenMes)
+        client!!.publish(SERVER_TOPIC, message.toByteArray(), 2, true)
     }
 
 

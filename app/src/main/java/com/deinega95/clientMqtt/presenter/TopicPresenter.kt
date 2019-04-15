@@ -1,13 +1,18 @@
 package com.deinega95.clientMqtt.presenter
 
+import android.util.Log
+import android.widget.Toast
 import com.deinega95.clientMqtt.di.scopes.MainScope
 import com.deinega95.clientMqtt.model.Message
 import com.deinega95.clientMqtt.services.MqttService
+import com.deinega95.clientMqtt.services.MqttService.Companion.SERVER_TOPIC
 import com.deinega95.clientMqtt.services.MqttService.Companion.TOPIC
 import com.deinega95.clientMqtt.services.ViewRouter
 import com.deinega95.clientMqtt.storage.PrefsManager
 import com.deinega95.clientMqtt.utils.MyLog
 import com.deinega95.clientMqtt.view.fragments.interfaces.ITopicFragment
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import java.util.*
 import javax.inject.Inject
 
@@ -28,11 +33,27 @@ class TopicPresenter @Inject constructor() : BasePresenter<ITopicFragment>(), Ob
                 client.subscribeToTopic(TOPIC){
                     view?.showTopics(it)
                 }
+                sendFirebaseToken()
             }else {
                 viewRouter.showError(error)
             }
 
         }
+    }
+
+    private fun sendFirebaseToken() {
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    return@OnCompleteListener
+                }
+
+                val token = task.result?.token
+                Log.d("!!", token)
+                if (token != null) {
+                    client.sendFirebaseToken(token)
+                }
+            })
     }
 
 
@@ -42,7 +63,7 @@ class TopicPresenter @Inject constructor() : BasePresenter<ITopicFragment>(), Ob
 
 
     fun onSendClicked(message: String) {
-        client.sendMessage(message)
+   //     client.sendMessage(message)
     }
 
     override fun update(o: Observable?, arg: Any?) {

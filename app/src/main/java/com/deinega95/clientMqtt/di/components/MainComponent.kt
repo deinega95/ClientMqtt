@@ -1,7 +1,6 @@
 package com.deinega95.clientMqtt.di.components
 
 import com.deinega95.clientMqtt.di.scopes.MainScope
-import com.deinega95.clientMqtt.view.activities.BaseActivity
 import com.deinega95.clientMqtt.view.activities.MainActivity
 import com.deinega95.clientMqtt.view.adapters.MessagesRecyclerViewAdapter
 import com.deinega95.clientMqtt.view.adapters.TopicRecyclerViewAdapter
