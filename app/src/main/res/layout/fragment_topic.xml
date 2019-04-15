@@ -5,8 +5,66 @@
         android:background="@color/main_background_dark"
         android:layout_height="match_parent">
 
+    <TextView
+            android:id="@+id/labelTopic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="@string/select_topic"
+            android:fontFamily="sans-serif-medium"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/background_with_bottom_line"
+    />
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/topicList"
+            android:layout_below="@id/labelTopic"
+            android:orientation="horizontal"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:background="@drawable/background_with_bottom_line"
+    />
+
+    <ImageView
+            android:id="@+id/addTopic"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_action_add"
+            android:layout_below="@id/topicList"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="?selectableItemBackground"
+    />
+
+
+    <TextView
+            android:id="@+id/mesLabel"
+            android:layout_below="@id/addTopic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="@string/messages"
+            android:fontFamily="sans-serif-medium"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/background_with_bottom_line"
+
+    />
+
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
+            android:layout_below="@id/mesLabel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/mesLayoyt"

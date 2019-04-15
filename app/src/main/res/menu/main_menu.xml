@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/getPhoto"
+          app:showAsAction="always"
+          android:icon="@drawable/ic_photo_camera"
+          android:title="@string/get_photo"
+    />
+    <item
+            android:id="@+id/setting"
+            app:showAsAction="always"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/settings"/>
+    <item
+            android:id="@+id/exit"
+            app:showAsAction="never"
+            android:icon="@drawable/ic_exit"
+            android:title="@string/exit"/>
+
+</menu>

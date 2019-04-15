@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "188383201548",
+    "firebase_url": "https://smarthouse-kubsu.firebaseio.com",
+    "project_id": "smarthouse-kubsu",
+    "storage_bucket": "smarthouse-kubsu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188383201548:android:f1ebe9ca399b939f",
+        "android_client_info": {
+          "package_name": "com.deinega95.clientMqtt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "188383201548-ptp0aea8ao58f8fiij099n3lfmt02506.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIRhMRIRqMsOGP1RFiO3RDTgLZ29KqFmY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "188383201548-ptp0aea8ao58f8fiij099n3lfmt02506.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

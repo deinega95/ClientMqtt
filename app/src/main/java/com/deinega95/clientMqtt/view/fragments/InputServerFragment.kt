@@ -1,6 +1,5 @@
 package com.deinega95.clientMqtt.view.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +7,6 @@ import android.view.ViewGroup
 import com.deinega95.clientMqtt.R
 import com.deinega95.clientMqtt.di.App
 import com.deinega95.clientMqtt.presenter.InputServerPresenter
-import com.deinega95.clientMqtt.view.activities.AuthorizationActivity
-import com.deinega95.clientMqtt.view.activities.MainActivity
 import com.deinega95.clientMqtt.view.fragments.interfaces.IInputServerFragment
 import kotlinx.android.synthetic.main.fragment_input_server.*
 import javax.inject.Inject
@@ -33,23 +30,19 @@ class InputServerFragment : BaseFragment(), IInputServerFragment {
         super.onViewCreated(view, savedInstanceState)
         presenter.viewReady(this)
         connectBtn.setOnClickListener {
-            presenter.onConnectClicked(addressBroker.text.toString(), name.text.toString())
+            presenter.onConnectClicked(addressBroker.text.toString(), name.text.toString(), password.text.toString())
         }
     }
 
-    override fun showMainActivity() {
-        var intent = Intent(context!!, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        startActivity(intent)
-    }
 
-    override fun showError(mess: String?) {
-
+    override fun setContent(server: String?, username: String?, password: String?) {
+        addressBroker.setText(server)
+        name.setText(username)
+        this.password.setText(password)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         presenter.viewDied(this)
     }
-
 }
