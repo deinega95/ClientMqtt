@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.item_message.view.*
 import javax.inject.Inject
 
 
-class MessagesRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MessagesRecyclerViewAdapter : RecyclerView.Adapter<MessagesRecyclerViewAdapter.MyViewHolder>() {
 
     @Inject
     lateinit var presenter: TopicPresenter
@@ -30,13 +30,16 @@ class MessagesRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
         App.instance.mainComponent?.inject(this)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return when (viewType) {
             R.layout.item_message -> {
-                MyViewHolder(LayoutInflater.from(parent.context).inflate(viewType, parent, false))
+                MessageViewHolder(LayoutInflater.from(parent.context).inflate(viewType, parent, false))
             }
             R.layout.item_image -> {
                 ImageViewHolder(LayoutInflater.from(parent.context).inflate(viewType, parent, false))
+            }
+            R.layout.empty_state_message -> {
+                EmptyStateViewHolder(LayoutInflater.from(parent.context).inflate(viewType, parent, false))
             }
             else -> throw java.lang.Exception("invalid oncreateiewholder")
         }
@@ -44,40 +47,39 @@ class MessagesRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return when (data.size) {
+            0 -> 1
+            else -> data.size
+        }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (data[position].type) {
-            "image" -> R.layout.item_image
-            "text" -> R.layout.item_message
+        return when {
+            data.isEmpty() -> R.layout.empty_state_message
+            data[position].type == "image" -> R.layout.item_image
+            data[position].type == "text" -> R.layout.item_message
             else -> throw Exception("invalid type message")
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder) {
-            is ImageViewHolder -> holder.bind(data[position])
-            is MyViewHolder -> holder.bind(data[position])
-        }
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        holder.bind(position)
     }
 
 
     fun setData(messages: ArrayList<Message>) {
-        Log.e("setdata", messages.size.toString())
-        Log.e("setdata", this.toString())
         this.data = messages
         notifyDataSetChanged()
     }
 
-    inner class MyViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        init {
-            itemView.setOnClickListener {
-           //     presenter.onItemClicked(data[adapterPosition])
-            }
-        }
+    abstract class MyViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+        abstract fun bind(pos: Int)
+    }
 
-        fun bind(mes: Message) {
+    inner class MessageViewHolder(v: View) : MyViewHolder(v) {
+
+        override fun bind(pos: Int) {
+            val mes = data[pos]
             Log.e("bind", mes.text)
             itemView.message.text = mes.text
 
@@ -85,14 +87,15 @@ class MessagesRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    inner class ImageViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+    inner class ImageViewHolder(v: View) : MyViewHolder(v) {
         init {
             itemView.setOnClickListener {
-           //     presenter.onItemClicked(data[adapterPosition])
+                //     presenter.onItemClicked(data[adapterPosition])
             }
         }
 
-        fun bind(message: Message) {
+        override fun bind(pos: Int) {
+            val message = data[pos]
             val mes = message.image!!.copyOfRange(6, message.image!!.size)
             val bmp = BitmapFactory.decodeByteArray(mes, 0, mes.size)
             MyLog.show("bmp=${bmp.height}")
@@ -104,5 +107,9 @@ class MessagesRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
                 )
             )
         }
+    }
+
+    inner class EmptyStateViewHolder(v: View) : MyViewHolder(v) {
+        override fun bind(pos: Int) {}
     }
 }
