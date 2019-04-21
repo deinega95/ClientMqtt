@@ -25,5 +25,9 @@
     <string name="name_topic">Имя топика</string>
     <string name="new_topic">Подписка на топик</string>
     <string name="notification">Оповещение</string>
+    <string name="delete_topic">Вы действительно хотите отписаться от</string>
+    <string name="empty_topic">Вы не подписаны ни на один топик</string>
+    <string name="empty_messages">Список сообщений пуст</string>
+    <string name="cancel">Отмена</string>
 
 </resources>

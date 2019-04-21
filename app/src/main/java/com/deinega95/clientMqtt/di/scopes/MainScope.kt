@@ -1,6 +1,5 @@
 package com.deinega95.clientMqtt.di.scopes
 
-import javax.inject.Qualifier
 import javax.inject.Scope
 
 @Scope

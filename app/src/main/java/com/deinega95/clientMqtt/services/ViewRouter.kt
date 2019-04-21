@@ -55,4 +55,9 @@ class ViewRouter @Inject constructor() {
         val intent = Intent(currentActivity, AuthorizationActivity::class.java)
         currentActivity?.startActivity(intent)
     }
+
+    fun showConfirmDialog(text: String, callback: () -> Unit) {
+        currentActivity?.showConfirmDialog(text, callback)
+
+    }
 }

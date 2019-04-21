@@ -15,6 +15,7 @@ import com.deinega95.clientMqtt.presenter.TopicPresenter
 import com.deinega95.clientMqtt.view.adapters.MessagesRecyclerViewAdapter
 import com.deinega95.clientMqtt.view.adapters.TopicRecyclerViewAdapter
 import com.deinega95.clientMqtt.view.fragments.interfaces.ITopicFragment
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.fragment_topic.*
 import javax.inject.Inject
 
@@ -25,6 +26,7 @@ class TopicFragment : GalleryFragment(), ITopicFragment {
 
     private lateinit var messagesAdapter: MessagesRecyclerViewAdapter
     private lateinit var topicsAdapter: TopicRecyclerViewAdapter
+    private var messageET:TextInputEditText?=null
 
     init {
         App.instance.mainComponent?.inject(this)
@@ -38,7 +40,9 @@ class TopicFragment : GalleryFragment(), ITopicFragment {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        messageET = message
         initList()
+
         presenter.viewReady(this)
         setListeners()
     }
@@ -57,7 +61,7 @@ class TopicFragment : GalleryFragment(), ITopicFragment {
 
     private fun setListeners() {
         sendBtn.setOnClickListener {
-            presenter.onSendClicked(message.text.toString())
+            presenter.onSendClicked(messageET?.text.toString())
         }
 
         addTopic.setOnClickListener {
@@ -128,8 +132,8 @@ class TopicFragment : GalleryFragment(), ITopicFragment {
         topicsAdapter.setData(topics)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         presenter.viewDied(this)
     }
 }

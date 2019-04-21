@@ -25,7 +25,7 @@ class MqttService @Inject constructor() : Observable() {
     @Inject
     lateinit var prefsManager: PrefsManager
 
-    val topics = mutableListOf<String>()
+    val topics = mutableSetOf<String>()
     var client: MqttAndroidClient? = null
     private var messages = ArrayList<Message>()
 
@@ -118,7 +118,7 @@ class MqttService @Inject constructor() : Observable() {
         return options
     }
 
-    fun subscribeToTopic(topic: String, callback: (top: List<String>) -> Unit = {}) {
+    fun subscribeToTopic(topic: String, callback: (top: Set<String>) -> Unit = {}) {
         client?.subscribe(topic, 0, null, object : IMqttActionListener {
             override fun onSuccess(asyncActionToken: IMqttToken?) {
                 MyLog.show("Mqtt Subscribed topic")
@@ -128,6 +128,20 @@ class MqttService @Inject constructor() : Observable() {
 
             override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
                 MyLog.show("Mqtt onFailure Subscribed topic")
+            }
+        })
+    }
+
+
+    fun unsubscribeTopic(topic: String, callback:(top: Set<String>)->Unit) {
+        client?.unsubscribe(topic,this, object : IMqttActionListener{
+            override fun onSuccess(asyncActionToken: IMqttToken?) {
+                topics.remove(topic)
+                callback.invoke(topics)
+            }
+
+            override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
+                callback.invoke(topics)
             }
         })
     }
@@ -152,4 +166,11 @@ class MqttService @Inject constructor() : Observable() {
 /*    fun sendImage(b: ByteArray?) {
         client!!.publish(TOPIC, MqttMessage("image@".toByteArray() + b!!))
     }*/
+
+    fun clear(){
+        topics.clear()
+        client?.disconnect()
+        client = null
+    }
+
 }

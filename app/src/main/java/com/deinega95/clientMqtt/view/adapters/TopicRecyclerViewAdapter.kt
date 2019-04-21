@@ -20,20 +20,37 @@ class TopicRecyclerViewAdapter : RecyclerView.Adapter<TopicRecyclerViewAdapter.M
         App.instance.mainComponent?.inject(this)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopicRecyclerViewAdapter.MyViewHolder {
-        return MyViewHolder(LayoutInflater.from(parent.context).inflate(viewType, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        return when (viewType) {
+            R.layout.item_topic -> TopicViewHolder(LayoutInflater.from(parent.context).inflate(viewType, parent, false))
+            R.layout.empty_state_topic -> EmptyStateViewHolder(
+                LayoutInflater.from(parent.context).inflate(
+                    viewType,
+                    parent,
+                    false
+                )
+            )
+            else -> throw RuntimeException("topicsAdapter invalid viewType=$viewType")
+        }
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return when (data.size) {
+            0 -> 1
+            else -> data.size
+        }
+
     }
 
     override fun getItemViewType(position: Int): Int {
-        return R.layout.item_topic
+        return when {
+            data.isEmpty() -> R.layout.empty_state_topic
+            else -> R.layout.item_topic
+        }
     }
 
-    override fun onBindViewHolder(holder: TopicRecyclerViewAdapter.MyViewHolder, position: Int) {
-        holder.bind(data[position])
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        holder.bind(position)
     }
 
 
@@ -42,15 +59,24 @@ class TopicRecyclerViewAdapter : RecyclerView.Adapter<TopicRecyclerViewAdapter.M
         notifyDataSetChanged()
     }
 
-    inner class MyViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+    abstract class MyViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+        abstract fun bind(pos: Int)
+    }
+
+    inner class TopicViewHolder(v: View) : MyViewHolder(v) {
         init {
             itemView.setOnClickListener {
                 presenter.onTopicClicked(data[adapterPosition])
             }
         }
 
-        fun bind(name: String) {
-            itemView.topicTV.text = name
+        override fun bind(pos: Int) {
+            val text = data[pos]
+            itemView.topicTV.text = text
         }
+    }
+
+    inner class EmptyStateViewHolder(v: View) : MyViewHolder(v) {
+        override fun bind(pos: Int) {}
     }
 }

@@ -5,7 +5,7 @@ import java.util.*
 
 object DateUtils {
     val dateFormat by lazy {
-        return@lazy SimpleDateFormat("HH:mm", Locale("ru"))
+        return@lazy SimpleDateFormat("dd MMMM, HH:mm", Locale("ru"))
     }
 }
 

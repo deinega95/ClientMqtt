@@ -1,11 +1,11 @@
 package com.deinega95.clientMqtt.presenter
 
 import android.util.Log
-import android.widget.Toast
+import com.deinega95.clientMqtt.R
+import com.deinega95.clientMqtt.di.App
 import com.deinega95.clientMqtt.di.scopes.MainScope
 import com.deinega95.clientMqtt.model.Message
 import com.deinega95.clientMqtt.services.MqttService
-import com.deinega95.clientMqtt.services.MqttService.Companion.SERVER_TOPIC
 import com.deinega95.clientMqtt.services.MqttService.Companion.TOPIC
 import com.deinega95.clientMqtt.services.ViewRouter
 import com.deinega95.clientMqtt.storage.PrefsManager
@@ -27,17 +27,16 @@ class TopicPresenter @Inject constructor() : BasePresenter<ITopicFragment>(), Ob
 
 
     override fun viewAttached() {
-        client.connect{isConnect, error ->
-            if (isConnect){
+        client.connect { isConnect, error ->
+            if (isConnect) {
                 client.addObserver(this)
-                client.subscribeToTopic(TOPIC){
-                    view?.showTopics(it)
+                client.subscribeToTopic(TOPIC) { topics ->
+                    view?.showTopics(topics.toList())
                 }
                 sendFirebaseToken()
-            }else {
+            } else {
                 viewRouter.showError(error)
             }
-
         }
     }
 
@@ -59,11 +58,13 @@ class TopicPresenter @Inject constructor() : BasePresenter<ITopicFragment>(), Ob
 
     override fun viewDettached() {
         client.deleteObserver(this)
+        client.clear()
     }
 
 
     fun onSendClicked(message: String) {
-   //     client.sendMessage(message)
+        val mes = Message(type = "text", text = message, time = System.currentTimeMillis(), id = 1)
+        client.sendMessage(mes)
     }
 
     override fun update(o: Observable?, arg: Any?) {
@@ -89,8 +90,13 @@ class TopicPresenter @Inject constructor() : BasePresenter<ITopicFragment>(), Ob
         viewRouter.exitApp()
     }
 
-    fun onTopicClicked(name: String) {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    fun onTopicClicked(topic: String) {
+        val text = App.instance.getString(R.string.delete_topic) + " \"$topic\"?"
+        viewRouter.showConfirmDialog(text) {
+            client.unsubscribeTopic(topic) { topics ->
+                view?.showTopics(topics.toList())
+            }
+        }
     }
 
     fun onAddTopicClicked() {
@@ -98,8 +104,8 @@ class TopicPresenter @Inject constructor() : BasePresenter<ITopicFragment>(), Ob
     }
 
     fun onSubscribeClicked(name: String) {
-        client.subscribeToTopic(name){
-            view?.showTopics(it)
+        client.subscribeToTopic(name) { topics ->
+            view?.showTopics(topics.toList())
         }
     }
 }

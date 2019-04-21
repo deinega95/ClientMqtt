@@ -10,5 +10,8 @@
           tools:text="topic"
           android:padding="16dp"
           android:foreground="?selectableItemBackground"
-          android:layout_marginLeft="16dp"
+          android:layout_marginStart="16dp"
+          android:gravity="center"
+          android:drawablePadding="8dp"
+          android:drawableEnd="@drawable/ic_action_delete"
 />

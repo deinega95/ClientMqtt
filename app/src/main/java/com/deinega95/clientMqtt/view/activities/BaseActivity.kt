@@ -51,4 +51,16 @@ lateinit var viewRouter: ViewRouter
             .positiveButton(res = R.string.ok)
             .show()
     }
+
+    fun showConfirmDialog(text: String, callback: () -> Unit) {
+        MaterialDialog(this)
+            .message(text = text)
+            .cancelable(true)
+            .positiveButton(res = R.string.ok, click = {
+                callback.invoke()
+            })
+            .negativeButton(res=R.string.cancel)
+            .show()
+
+    }
 }
