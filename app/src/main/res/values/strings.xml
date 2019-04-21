@@ -24,5 +24,6 @@
     <string name="add_topic">Подписаться на топик</string>
     <string name="name_topic">Имя топика</string>
     <string name="new_topic">Подписка на топик</string>
+    <string name="notification">Оповещение</string>
 
 </resources>
