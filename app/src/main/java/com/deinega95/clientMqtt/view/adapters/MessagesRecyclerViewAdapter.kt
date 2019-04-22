@@ -15,6 +15,7 @@ import com.deinega95.clientMqtt.utils.MyLog
 import com.deinega95.clientMqtt.utils.toDate
 import kotlinx.android.synthetic.main.item_image.view.*
 import kotlinx.android.synthetic.main.item_message.view.*
+import java.net.URLDecoder
 import javax.inject.Inject
 
 
@@ -82,7 +83,7 @@ class MessagesRecyclerViewAdapter : RecyclerView.Adapter<MessagesRecyclerViewAda
             val mes = data[pos]
             Log.e("bind", mes.text)
             itemView.message.text = mes.text
-
+if (mes.time != null)
             itemView.date.text = mes.time!!.toDate()
         }
     }
@@ -96,7 +97,7 @@ class MessagesRecyclerViewAdapter : RecyclerView.Adapter<MessagesRecyclerViewAda
 
         override fun bind(pos: Int) {
             val message = data[pos]
-            val mes = message.image!!.copyOfRange(6, message.image!!.size)
+            val mes = message.image!!.copyOfRange(0, message.image!!.size)
             val bmp = BitmapFactory.decodeByteArray(mes, 0, mes.size)
             MyLog.show("bmp=${bmp.height}")
             MyLog.show("bmp=${bmp.width}")

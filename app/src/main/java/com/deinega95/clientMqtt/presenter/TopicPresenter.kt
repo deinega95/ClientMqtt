@@ -83,6 +83,7 @@ class TopicPresenter @Inject constructor() : BasePresenter<ITopicFragment>(), Ob
     }
 
     fun getPhotoClicked() {
+        client.getCurrentPhoto()
         //view!!.showPhotosDialog()
     }
 

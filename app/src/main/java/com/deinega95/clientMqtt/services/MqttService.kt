@@ -5,8 +5,11 @@ import com.deinega95.clientMqtt.model.Message
 import com.deinega95.clientMqtt.storage.PrefsManager
 import com.deinega95.clientMqtt.utils.MyLog
 import com.google.gson.Gson
+import com.google.gson.JsonParseException
 import org.eclipse.paho.android.service.MqttAndroidClient
 import org.eclipse.paho.client.mqttv3.*
+import java.lang.Exception
+import java.nio.charset.Charset
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -74,9 +77,18 @@ class MqttService @Inject constructor() : Observable() {
 
             override fun messageArrived(topic: String?, mes: MqttMessage?) {
                 MyLog.show("messageArrived ${mes.toString()}")
+try {
+    val message = gson.fromJson(mes.toString(), Message::class.java)
+    messages.add(message)
+} catch (ex:Exception){
+    MyLog.show("Exception in message")
+    val mes = Message().apply {
+        image = mes?.payload
+        type="image"
+    }
+    messages.add(mes)
+}
 
-                val message = gson.fromJson(mes.toString(), Message::class.java)
-                messages.add(message)
 
                 setChanged()
                 notifyObservers(messages)
@@ -147,7 +159,6 @@ class MqttService @Inject constructor() : Observable() {
     }
 
     fun sendMessage(message: Message) {
-
         val mes = gson.toJson(message)
         MyLog.show("send mes")
         client!!.publish(TOPIC, mes.toByteArray(), 2, true)
@@ -171,6 +182,22 @@ class MqttService @Inject constructor() : Observable() {
         topics.clear()
         client?.disconnect()
         client = null
+    }
+
+    fun getCurrentPhoto() {
+        val mes = Message().apply {
+            type = "get_current_image"
+        }
+        val message = gson.toJson(mes)
+        client!!.publish(SERVER_TOPIC, message.toByteArray(), 2, true, this, object :IMqttActionListener{
+            override fun onSuccess(asyncActionToken: IMqttToken?) {
+                MyLog.show("publish getImage onSuccess")
+            }
+
+            override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
+                MyLog.show("publish getImage onFailure")
+            }
+        })
     }
 
 }
