@@ -1,7 +1,5 @@
 package com.deinega95.clientMqtt.view.adapters
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +9,10 @@ import com.deinega95.clientMqtt.R
 import com.deinega95.clientMqtt.di.App
 import com.deinega95.clientMqtt.model.Message
 import com.deinega95.clientMqtt.presenter.TopicPresenter
-import com.deinega95.clientMqtt.utils.MyLog
+import com.deinega95.clientMqtt.utils.toBitmap
 import com.deinega95.clientMqtt.utils.toDate
 import kotlinx.android.synthetic.main.item_image.view.*
 import kotlinx.android.synthetic.main.item_message.view.*
-import java.net.URLDecoder
 import javax.inject.Inject
 
 
@@ -83,8 +80,8 @@ class MessagesRecyclerViewAdapter : RecyclerView.Adapter<MessagesRecyclerViewAda
             val mes = data[pos]
             Log.e("bind", mes.text)
             itemView.message.text = mes.text
-if (mes.time != null)
-            itemView.date.text = mes.time!!.toDate()
+            if (mes.time != null)
+                itemView.date.text = mes.time!!.toDate()
         }
     }
 
@@ -97,17 +94,10 @@ if (mes.time != null)
 
         override fun bind(pos: Int) {
             val message = data[pos]
-            val mes = message.image!!.copyOfRange(0, message.image!!.size)
-            val bmp = BitmapFactory.decodeByteArray(mes, 0, mes.size)
-            MyLog.show("bmp=${bmp.height}")
-            MyLog.show("bmp=${bmp.width}")
-            itemView.image.setImageBitmap(
-                Bitmap.createScaledBitmap(
-                    bmp, 300,
-                    500, false
-                )
-            )
+            val bmp = message.image?.toBitmap()
+            itemView.image.setImageBitmap(bmp)
         }
+
     }
 
     inner class EmptyStateViewHolder(v: View) : MyViewHolder(v) {

@@ -77,17 +77,17 @@ class MqttService @Inject constructor() : Observable() {
 
             override fun messageArrived(topic: String?, mes: MqttMessage?) {
                 MyLog.show("messageArrived ${mes.toString()}")
-try {
-    val message = gson.fromJson(mes.toString(), Message::class.java)
-    messages.add(message)
-} catch (ex:Exception){
-    MyLog.show("Exception in message")
-    val mes = Message().apply {
-        image = mes?.payload
-        type="image"
-    }
-    messages.add(mes)
-}
+                try {
+                    val message = gson.fromJson(mes.toString(), Message::class.java)
+                    messages.add(message)
+                } catch (ex:Exception){
+                    MyLog.show("Exception in message")
+                    val mes = Message().apply {
+                        //image = mes?.payload
+                        type="image"
+                    }
+                    messages.add(mes)
+                }
 
 
                 setChanged()
