@@ -1,10 +1,7 @@
 package com.deinega95.clientMqtt.di
 
 import android.app.Application
-import com.deinega95.clientMqtt.di.components.ApplicationComponent
-import com.deinega95.clientMqtt.di.components.AuthorizationComponent
-import com.deinega95.clientMqtt.di.components.DaggerApplicationComponent
-import com.deinega95.clientMqtt.di.components.MainComponent
+import com.deinega95.clientMqtt.di.components.*
 import com.deinega95.clientMqtt.di.modules.AndroidModule
 
 
@@ -33,6 +30,14 @@ class App : Application() {
         get() {
             if (field == null) {
                 field = component?.getMainComponent()!!
+            }
+            return field
+        }
+
+    var photoByPeriodComponent: PhotoByPeriodComponent? = null
+        get() {
+            if (field == null) {
+                field = mainComponent?.getPhotoByPeriodComponent()!!
             }
             return field
         }

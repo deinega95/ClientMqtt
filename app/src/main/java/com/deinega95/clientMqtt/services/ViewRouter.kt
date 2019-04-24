@@ -6,7 +6,9 @@ import com.deinega95.clientMqtt.utils.MyLog
 import com.deinega95.clientMqtt.view.activities.AuthorizationActivity
 import com.deinega95.clientMqtt.view.activities.BaseActivity
 import com.deinega95.clientMqtt.view.activities.MainActivity
+import com.deinega95.clientMqtt.view.activities.PhotoByPeriodActivity
 import com.deinega95.clientMqtt.view.fragments.InputServerFragment
+import com.deinega95.clientMqtt.view.fragments.PhotosByPeriodFragment
 import com.deinega95.clientMqtt.view.fragments.TopicFragment
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -43,9 +45,10 @@ class ViewRouter @Inject constructor() {
     }
 
     fun showError(error: String?) {
-       currentActivity?.showErrorMessage(error)
+        currentActivity?.showErrorMessage(error)
     }
-    fun showMainActivity(){
+
+    fun showMainActivity() {
         val intent = Intent(currentActivity, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         currentActivity?.startActivity(intent)
@@ -60,4 +63,14 @@ class ViewRouter @Inject constructor() {
         currentActivity?.showConfirmDialog(text, callback)
 
     }
+
+    fun startPhotosActivity() {
+        val intent = Intent(currentActivity, PhotoByPeriodActivity::class.java)
+        currentActivity?.startActivity(intent)
+    }
+
+    fun showPhotosByPeriodFragment() {
+        currentActivity?.replaceFragment(PhotosByPeriodFragment())
+    }
+
 }

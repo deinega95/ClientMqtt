@@ -5,11 +5,8 @@ import com.deinega95.clientMqtt.model.Message
 import com.deinega95.clientMqtt.storage.PrefsManager
 import com.deinega95.clientMqtt.utils.MyLog
 import com.google.gson.Gson
-import com.google.gson.JsonParseException
 import org.eclipse.paho.android.service.MqttAndroidClient
 import org.eclipse.paho.client.mqttv3.*
-import java.lang.Exception
-import java.nio.charset.Charset
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,6 +28,7 @@ class MqttService @Inject constructor() : Observable() {
     val topics = mutableSetOf<String>()
     var client: MqttAndroidClient? = null
     private var messages = ArrayList<Message>()
+    private var topicPhotoByPeriod:String?=null
 
     //  val broker = "tcp://m16.cloudmqtt.com:12163"
     //   val broker = "tcp://192.168.1.232:1883"
@@ -80,15 +78,9 @@ class MqttService @Inject constructor() : Observable() {
                 try {
                     val message = gson.fromJson(mes.toString(), Message::class.java)
                     messages.add(message)
-                } catch (ex:Exception){
+                } catch (ex: Exception) {
                     MyLog.show("Exception in message")
-                    val mes = Message().apply {
-                        //image = mes?.payload
-                        type="image"
-                    }
-                    messages.add(mes)
                 }
-
 
                 setChanged()
                 notifyObservers(messages)
@@ -145,8 +137,8 @@ class MqttService @Inject constructor() : Observable() {
     }
 
 
-    fun unsubscribeTopic(topic: String, callback:(top: Set<String>)->Unit) {
-        client?.unsubscribe(topic,this, object : IMqttActionListener{
+    fun unsubscribeTopic(topic: String, callback: (top: Set<String>) -> Unit) {
+        client?.unsubscribe(topic, this, object : IMqttActionListener {
             override fun onSuccess(asyncActionToken: IMqttToken?) {
                 topics.remove(topic)
                 callback.invoke(topics)
@@ -178,7 +170,7 @@ class MqttService @Inject constructor() : Observable() {
         client!!.publish(TOPIC, MqttMessage("image@".toByteArray() + b!!))
     }*/
 
-    fun clear(){
+    fun clear() {
         topics.clear()
         client?.disconnect()
         client = null
@@ -189,7 +181,7 @@ class MqttService @Inject constructor() : Observable() {
             type = "get_current_image"
         }
         val message = gson.toJson(mes)
-        client!!.publish(SERVER_TOPIC, message.toByteArray(), 2, true, this, object :IMqttActionListener{
+        client!!.publish(SERVER_TOPIC, message.toByteArray(), 2, true, this, object : IMqttActionListener {
             override fun onSuccess(asyncActionToken: IMqttToken?) {
                 MyLog.show("publish getImage onSuccess")
             }
@@ -198,6 +190,16 @@ class MqttService @Inject constructor() : Observable() {
                 MyLog.show("publish getImage onFailure")
             }
         })
+    }
+
+    fun getPhotoByPeriod(topicWithPhoto: String, startTime: Long, endTime: Long) {
+        topicPhotoByPeriod = topicWithPhoto
+
+        val message = Message(type = "get_photo_by_period", startPeriod = startTime, endPeriod = endTime, topicByPeriodPhoto = topicWithPhoto)
+        val mes = gson.toJson(message)
+        MyLog.show("send mes")
+        client!!.publish(topicWithPhoto, mes.toByteArray(), 0, true)
+
     }
 
 }

@@ -31,6 +31,9 @@
         <activity android:name=".view.activities.AuthorizationActivity"
                   android:screenOrientation="portrait"
         />
+        <activity android:name=".view.activities.PhotoByPeriodActivity"
+                  android:screenOrientation="portrait"
+        />
 
         <service android:name="org.eclipse.paho.android.service.MqttService"/>
 

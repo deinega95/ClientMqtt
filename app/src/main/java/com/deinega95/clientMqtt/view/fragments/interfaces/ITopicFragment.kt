@@ -7,5 +7,6 @@ interface ITopicFragment {
     fun setMessage(messages: ArrayList<Message>)
     fun showAddTopicDialog()
     fun showTopics(topics: List<String>)
+    fun showSelectGetPhotoDialog()
     // fun showPhotosDialog()
 }

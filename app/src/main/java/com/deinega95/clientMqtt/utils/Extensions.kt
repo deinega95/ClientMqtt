@@ -14,3 +14,4 @@ fun String.toBitmap(): Bitmap? {
         null
     }
 }
+

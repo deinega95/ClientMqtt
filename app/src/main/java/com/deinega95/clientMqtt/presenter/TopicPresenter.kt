@@ -83,7 +83,7 @@ class TopicPresenter @Inject constructor() : BasePresenter<ITopicFragment>(), Ob
     }
 
     fun getPhotoClicked() {
-        client.getCurrentPhoto()
+        view?.showSelectGetPhotoDialog()
         //view!!.showPhotosDialog()
     }
 
@@ -109,4 +109,14 @@ class TopicPresenter @Inject constructor() : BasePresenter<ITopicFragment>(), Ob
             view?.showTopics(topics.toList())
         }
     }
+
+    fun onCurrentPhotoClicked() {
+        client.getCurrentPhoto()
+    }
+
+    fun onPeriodPhotoClicked() {
+        viewRouter.startPhotosActivity()
+    }
+
+
 }

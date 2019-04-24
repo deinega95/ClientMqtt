@@ -30,4 +30,18 @@
     <string name="empty_messages">Список сообщений пуст</string>
     <string name="cancel">Отмена</string>
 
+    <string name="get_current_photo">В текущей момент</string>
+    <string name="period_photo">За период</string>
+    <string name="select_start_date">Выбрать дату начала</string>
+    <string name="selecting_start_time">Выберите время начала</string>
+    <string name="selecting_start_date">Выберите дату начала</string>
+    <string name="select_end_time">Выбрать конечное время</string>
+    <string name="selecting_end_time">Выберите конечное время</string>
+    <string name="select_end_date">Выбрать конечную дату</string>
+    <string name="selecting_end_date">Выберите конечную дату</string>
+    <string name="select_start_time">Выбрать начальное время</string>
+    <string name="start_period">Начало периода:</string>
+    <string name="end_period">Конец периода:</string>
+    <string name="start_date_more_end_date_error">Дата начала должна быть раньше, чем дата окончания</string>
+
 </resources>

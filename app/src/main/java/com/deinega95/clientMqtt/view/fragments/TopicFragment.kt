@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.list.listItems
 import com.deinega95.clientMqtt.R
 import com.deinega95.clientMqtt.di.App
 import com.deinega95.clientMqtt.model.Message
@@ -130,6 +131,18 @@ class TopicFragment : GalleryFragment(), ITopicFragment {
 
     override fun showTopics(topics: List<String>) {
         topicsAdapter.setData(topics)
+    }
+
+    override fun showSelectGetPhotoDialog() {
+        MaterialDialog(context!!).show {
+            listItems(R.array.get_photo) { _, _, text ->
+                when (text) {
+                    getString(R.string.get_current_photo) -> presenter.onCurrentPhotoClicked()
+                    getString(R.string.period_photo) -> presenter.onPeriodPhotoClicked()
+                }
+            }
+        }
+
     }
 
     override fun onDestroyView() {
