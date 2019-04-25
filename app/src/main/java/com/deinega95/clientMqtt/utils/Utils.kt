@@ -1,13 +1,11 @@
 package com.deinega95.clientMqtt.utils
 
-import com.deinega95.clientMqtt.di.App
-import androidx.core.app.NotificationManagerCompat
 import android.app.NotificationManager
-import android.app.NotificationChannel
 import android.content.Context.NOTIFICATION_SERVICE
-import androidx.core.content.ContextCompat.getSystemService
-import android.text.TextUtils
 import android.os.Build
+import android.text.TextUtils
+import androidx.core.app.NotificationManagerCompat
+import com.deinega95.clientMqtt.di.App
 import com.deinega95.clientMqtt.services.MyFirebaseMessagingService.Companion.NOTIFICATION_CHANNEL_ID
 
 
@@ -35,6 +33,10 @@ object Utils {
         } else {
             return NotificationManagerCompat.from(App.instance.baseContext).areNotificationsEnabled()
         }
+    }
+
+    fun getDataURL(imgFile: String): String {
+        return ("data:image/jpeg;base64,$imgFile")
     }
 
 }

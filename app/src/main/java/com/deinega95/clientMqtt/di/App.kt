@@ -3,6 +3,8 @@ package com.deinega95.clientMqtt.di
 import android.app.Application
 import com.deinega95.clientMqtt.di.components.*
 import com.deinega95.clientMqtt.di.modules.AndroidModule
+import com.github.piasy.biv.BigImageViewer
+import com.github.piasy.biv.loader.glide.GlideImageLoader
 
 
 class App : Application() {
@@ -42,12 +44,23 @@ class App : Application() {
             return field
         }
 
+    var imageViewerComponent: ImageViewerComponent? = null
+        get() {
+            if (field == null) {
+                field = mainComponent?.getImageViewerComponent()!!
+            }
+            return field
+        }
+
     override fun onCreate() {
         super.onCreate()
         instance = this
+        BigImageViewer.initialize(GlideImageLoader.with(instance))
     }
 
-    fun clear(){
+    fun clear() {
+        imageViewerComponent = null
+        photoByPeriodComponent = null
         mainComponent = null
         authorizationComponent = null
     }

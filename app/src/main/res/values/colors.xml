@@ -19,5 +19,6 @@
     <color name="tab_active">#f8b502</color>
     <color name="icon_color">#EDEDEF</color>
     <color name="red">#ff3b30</color>
+    <color name="black">#000</color>
 
 </resources>

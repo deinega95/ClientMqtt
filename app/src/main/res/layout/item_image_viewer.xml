@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.github.piasy.biv.view.BigImageView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/viewerImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:failureImage="@drawable/ic_close"
+        app:failureImageInitScaleType="center"
+        app:initScaleType="fitCenter"
+        app:optimizeDisplay="true"
+        android:layout_marginTop="56dp"
+        android:layout_marginBottom="56dp"
+/>

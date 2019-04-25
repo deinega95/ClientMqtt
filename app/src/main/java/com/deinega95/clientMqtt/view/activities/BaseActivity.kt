@@ -12,8 +12,8 @@ import javax.inject.Inject
 
 
 abstract class BaseActivity : AppCompatActivity() {
-@Inject
-lateinit var viewRouter: ViewRouter
+    @Inject
+    lateinit var viewRouter: ViewRouter
 
     init {
         App.instance.component?.inject(this)
@@ -38,16 +38,19 @@ lateinit var viewRouter: ViewRouter
         MyLog.show("onDestroy")
         viewRouter.removeCurrentActivity(this)
     }
+
     fun replaceFragment(fr: BaseFragment) {
-        supportFragmentManager.beginTransaction()
+        supportFragmentManager
+            .beginTransaction()
             .replace(R.id.main_container, fr)
-            .commitNowAllowingStateLoss()
+            .addToBackStack(null)
+            .commitAllowingStateLoss()
     }
 
     fun showErrorMessage(error: String?) {
         MaterialDialog(this)
             .title(R.string.error)
-            .message(text = error?:"")
+            .message(text = error ?: "")
             .positiveButton(res = R.string.ok)
             .show()
     }
@@ -59,7 +62,7 @@ lateinit var viewRouter: ViewRouter
             .positiveButton(res = R.string.ok, click = {
                 callback.invoke()
             })
-            .negativeButton(res=R.string.cancel)
+            .negativeButton(res = R.string.cancel)
             .show()
 
     }

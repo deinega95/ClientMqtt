@@ -34,6 +34,8 @@ ext {
     gsonVersion = '2.8.5'
     matDialogVersion = '2.6.0'
     firebaseVersion = "16.0.8"
+    firebaseMessVersion = "17.6.0"
+    imageViewerVersion = "1.5.6"
 }
 
 dependencies {
@@ -44,9 +46,7 @@ dependencies {
     implementation "org.eclipse.paho:org.eclipse.paho.client.mqttv3:$pahoVersion"
     implementation "org.eclipse.paho:org.eclipse.paho.android.service:$pahoAndroidVersion"
 
-
     implementation "id.zelory:compressor:$compressorVersion"
-
 
     implementation "com.google.dagger:dagger:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
@@ -55,10 +55,13 @@ dependencies {
 
     implementation "com.google.code.gson:gson:$gsonVersion"
 
-  /*  implementation 'com.google.android:support-v4:r7'*/
     implementation "com.google.firebase:firebase-core:$firebaseVersion"
 
-    implementation 'com.google.firebase:firebase-messaging:17.6.0'
+    implementation "com.google.firebase:firebase-messaging:$firebaseMessVersion"
+
+    implementation "com.github.piasy:BigImageViewer:$imageViewerVersion"
+
+    implementation "com.github.piasy:GlideImageLoader:$imageViewerVersion"
 }
 
 apply plugin: 'com.google.gms.google-services'

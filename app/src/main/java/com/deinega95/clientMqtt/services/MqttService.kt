@@ -18,6 +18,7 @@ class MqttService @Inject constructor() : Observable() {
     companion object {
         const val TOPIC = "/smart-house/devices"
         const val SERVER_TOPIC = "/smart-house/camera"
+        const val PHOTO_BY_PERIOD_UPDATED = "PHOTO_BY_PERIOD_UPDATED"
     }
 
     @Inject
@@ -27,8 +28,10 @@ class MqttService @Inject constructor() : Observable() {
 
     val topics = mutableSetOf<String>()
     var client: MqttAndroidClient? = null
-    private var messages = ArrayList<Message>()
-    private var topicPhotoByPeriod:String?=null
+    private val messages = mutableListOf<Message>()
+    val photoByPeriod = mutableListOf<Message>()
+    var countAllPhotoByPeriod = 0
+    private var topicPhotoByPeriod: String? = null
 
     //  val broker = "tcp://m16.cloudmqtt.com:12163"
     //   val broker = "tcp://192.168.1.232:1883"
@@ -76,14 +79,12 @@ class MqttService @Inject constructor() : Observable() {
             override fun messageArrived(topic: String?, mes: MqttMessage?) {
                 MyLog.show("messageArrived ${mes.toString()}")
                 try {
-                    val message = gson.fromJson(mes.toString(), Message::class.java)
-                    messages.add(message)
+                    val message = gson.fromJson(mes.toString(), Message::class.java)!!
+                    parseMessage(message)
+
                 } catch (ex: Exception) {
                     MyLog.show("Exception in message")
                 }
-
-                setChanged()
-                notifyObservers(messages)
             }
 
             override fun connectionLost(cause: Throwable?) {
@@ -95,6 +96,21 @@ class MqttService @Inject constructor() : Observable() {
                 MyLog.show("deliveryComplete")
             }
         })
+    }
+
+    private fun parseMessage(message: Message) {
+        if (message.topic == topicPhotoByPeriod) {
+            if (message.countAllPhotoByPeriod != null) {
+                countAllPhotoByPeriod = message.countAllPhotoByPeriod!!
+            }
+            photoByPeriod.add(message)
+            setChanged()
+            notifyObservers(PHOTO_BY_PERIOD_UPDATED)
+        } else {
+            messages.add(message)
+            setChanged()
+            notifyObservers(messages)
+        }
     }
 
     private fun initClient() {
@@ -171,9 +187,13 @@ class MqttService @Inject constructor() : Observable() {
     }*/
 
     fun clear() {
+        countAllPhotoByPeriod = 0
+        messages.clear()
+        photoByPeriod.clear()
         topics.clear()
         client?.disconnect()
         client = null
+        topicPhotoByPeriod = null
     }
 
     fun getCurrentPhoto() {
@@ -193,13 +213,19 @@ class MqttService @Inject constructor() : Observable() {
     }
 
     fun getPhotoByPeriod(topicWithPhoto: String, startTime: Long, endTime: Long) {
+        photoByPeriod.clear()
         topicPhotoByPeriod = topicWithPhoto
 
-        val message = Message(type = "get_photo_by_period", startPeriod = startTime, endPeriod = endTime, topicByPeriodPhoto = topicWithPhoto)
+        val message = Message(
+            type = "get_photo_by_period",
+            startPeriod = startTime,
+            endPeriod = endTime,
+            topic = topicWithPhoto
+        )
         val mes = gson.toJson(message)
-        MyLog.show("send mes")
+        MyLog.show("send mes $mes")
         client!!.publish(topicWithPhoto, mes.toByteArray(), 0, true)
 
+        subscribeToTopic(topicWithPhoto)
     }
-
 }

@@ -7,6 +7,7 @@ import com.deinega95.clientMqtt.view.activities.AuthorizationActivity
 import com.deinega95.clientMqtt.view.activities.BaseActivity
 import com.deinega95.clientMqtt.view.activities.MainActivity
 import com.deinega95.clientMqtt.view.activities.PhotoByPeriodActivity
+import com.deinega95.clientMqtt.view.fragments.ImageViewerFragment
 import com.deinega95.clientMqtt.view.fragments.InputServerFragment
 import com.deinega95.clientMqtt.view.fragments.PhotosByPeriodFragment
 import com.deinega95.clientMqtt.view.fragments.TopicFragment
@@ -71,6 +72,14 @@ class ViewRouter @Inject constructor() {
 
     fun showPhotosByPeriodFragment() {
         currentActivity?.replaceFragment(PhotosByPeriodFragment())
+    }
+
+    fun closeFragment() {
+        currentActivity?.onBackPressed()
+    }
+
+    fun showImageViewer(photoId: Long) {
+        currentActivity?.replaceFragment(ImageViewerFragment.newInstance(photoId))
     }
 
 }

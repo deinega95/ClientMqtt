@@ -27,7 +27,7 @@ class TopicFragment : GalleryFragment(), ITopicFragment {
 
     private lateinit var messagesAdapter: MessagesRecyclerViewAdapter
     private lateinit var topicsAdapter: TopicRecyclerViewAdapter
-    private var messageET:TextInputEditText?=null
+    private var messageET: TextInputEditText? = null
 
     init {
         App.instance.mainComponent?.inject(this)
@@ -35,6 +35,7 @@ class TopicFragment : GalleryFragment(), ITopicFragment {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_topic, container, false)
+        setToolbar(R.string.app_name, false, view)
         setHasOptionsMenu(true)
         return view
     }
@@ -47,7 +48,6 @@ class TopicFragment : GalleryFragment(), ITopicFragment {
         presenter.viewReady(this)
         setListeners()
     }
-
 
 
     private fun initList() {
@@ -135,6 +135,7 @@ class TopicFragment : GalleryFragment(), ITopicFragment {
 
     override fun showSelectGetPhotoDialog() {
         MaterialDialog(context!!).show {
+            title(R.string.get_photo)
             listItems(R.array.get_photo) { _, _, text ->
                 when (text) {
                     getString(R.string.get_current_photo) -> presenter.onCurrentPhotoClicked()

@@ -43,5 +43,6 @@
     <string name="start_period">Начало периода:</string>
     <string name="end_period">Конец периода:</string>
     <string name="start_date_more_end_date_error">Дата начала должна быть раньше, чем дата окончания</string>
+    <string name="geted_photo_from">Получено фото за выбранный период:</string>
 
 </resources>

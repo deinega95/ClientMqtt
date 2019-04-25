@@ -15,4 +15,5 @@ interface MainComponent {
     fun inject(mainActivity: MainActivity)
     fun inject(topicRecyclerViewAdapter: TopicRecyclerViewAdapter)
     fun getPhotoByPeriodComponent(): PhotoByPeriodComponent
+    fun getImageViewerComponent(): ImageViewerComponent
 }

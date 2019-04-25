@@ -10,13 +10,15 @@ data class Message(
     @SerializedName("image")
     var image: String? = null,
     @SerializedName("id")
-    var id: Int? = null,
+    var id: Long? = null,
     @SerializedName("time")
     var time: Long? = null,
     @SerializedName("startPeriod")
     var startPeriod: Long? = null,
     @SerializedName("endPeriod")
     var endPeriod: Long? = null,
-    @SerializedName("topicByPeriodPhoto")
-    var topicByPeriodPhoto: String? = null
+    @SerializedName("topic")
+    var topic: String? = null,
+    @SerializedName("countAllPhotoByPeriod")
+    var countAllPhotoByPeriod: Int? = null
 )
