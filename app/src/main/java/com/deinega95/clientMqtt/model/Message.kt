@@ -17,8 +17,8 @@ data class Message(
     var startPeriod: Long? = null,
     @SerializedName("endPeriod")
     var endPeriod: Long? = null,
-    @SerializedName("topic")
-    var topic: String? = null,
+    @SerializedName("topicForPhoto")
+    var topicForPhoto: String? = null,
     @SerializedName("countAllPhotoByPeriod")
     var countAllPhotoByPeriod: Int? = null
 )

@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.deinega95.clientMqtt.R
 import com.deinega95.clientMqtt.di.App
 import com.deinega95.clientMqtt.presenter.SelectPeriodPhotoPresenter
@@ -24,6 +25,13 @@ class SelectPeriodPhotoFragment : BaseFragment(), ISelectPeriodPhotoFragment {
 
     private lateinit var datePickerDialog: DatePickerDialog
     private lateinit var timePicker: TimePickerDialog
+    private var startTime: TextView? = null
+    private var endTime: TextView? = null
+    private var startDateBtn: TextView? = null
+    private var endDateBtn: TextView? = null
+    private var startTimeBtn: TextView? = null
+    private var endTimeBtn: TextView? = null
+
 
     init {
         App.instance.photoByPeriodComponent?.inject(this)
@@ -31,7 +39,7 @@ class SelectPeriodPhotoFragment : BaseFragment(), ISelectPeriodPhotoFragment {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_select_period_photo, container, false)
-
+        setToolbar(R.string.photo_from_camera, false, view)
         return view
     }
 
@@ -54,6 +62,13 @@ class SelectPeriodPhotoFragment : BaseFragment(), ISelectPeriodPhotoFragment {
         readyBtn.setOnClickListener {
             presenter.onReadyClickListener()
         }
+
+        startTime = startDateTimeTV
+        endTime = endDateTimeTV
+        startDateBtn = selectStartDateBtn
+        endDateBtn = selectEndDateBtn
+        endTimeBtn = selectEndTimeBtn
+        startTimeBtn = selectStartTimeBtn
 
         presenter.viewReady(this)
     }
@@ -96,7 +111,8 @@ class SelectPeriodPhotoFragment : BaseFragment(), ISelectPeriodPhotoFragment {
     }
 
     private fun showTimeDialog(title: Int, callback: (hours: Int, minutes: Int) -> Unit) {
-        timePicker = TimePickerDialog(context, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+        timePicker = TimePickerDialog(
+            context, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
             TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
                 callback.invoke(hourOfDay, minute)
             }, 12, 0, true
@@ -110,11 +126,11 @@ class SelectPeriodPhotoFragment : BaseFragment(), ISelectPeriodPhotoFragment {
 
 
     override fun showStartDate(date: String) {
-        startDateTime.text = date
+        startTime?.text = date
     }
 
     override fun showEndDate(date: String) {
-        endDateTime.text = date
+        endTime?.text = date
     }
 
     override fun onDestroy() {

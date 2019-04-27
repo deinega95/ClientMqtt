@@ -6,8 +6,13 @@
                 android:layout_height="match_parent"
                 android:background="@color/main_background">
 
+    <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_main"/>
+
     <TextView
             android:id="@+id/startDateLabel"
+            android:layout_below="@id/toolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
@@ -20,7 +25,7 @@
 
 
     <TextView
-            android:id="@+id/startDateTime"
+            android:id="@+id/startDateTimeTV"
             android:layout_toEndOf="@id/startDateLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,7 +39,7 @@
     />
 
     <TextView
-            android:id="@+id/endDateLabel"
+            android:id="@+id/endDateLabelTV"
             android:layout_below="@id/startDateLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,15 +53,15 @@
 
 
     <TextView
-            android:id="@+id/endDateTime"
-            android:layout_toEndOf="@id/endDateLabel"
-            android:layout_alignStart="@id/startDateTime"
+            android:id="@+id/endDateTimeTV"
+            android:layout_toEndOf="@id/endDateLabelTV"
+            android:layout_alignStart="@id/startDateTimeTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textColor="@color/link_color"
             tools:text="Time 12:45"
-            android:layout_alignBottom="@id/endDateLabel"
+            android:layout_alignBottom="@id/endDateLabelTV"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="16dp"
     />
@@ -65,7 +70,7 @@
     <Button
             android:id="@+id/selectStartDateBtn"
             android:layout_centerVertical="true"
-            android:layout_below="@id/endDateTime"
+            android:layout_below="@id/endDateTimeTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"

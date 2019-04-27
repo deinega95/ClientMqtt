@@ -22,7 +22,7 @@ class InputServerFragment : BaseFragment(), IInputServerFragment {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.fragment_input_server, container, false)
-
+        setToolbar(R.string.info_about_broker, false, view)
         return view
     }
 

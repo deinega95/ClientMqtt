@@ -7,6 +7,10 @@
         android:background="@color/main_background_dark"
 >
 
+    <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_main"/>
+
     <com.google.android.material.textfield.TextInputLayout
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
@@ -23,7 +27,6 @@
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/hint"
                 android:hint="@string/address_broker"
-                android:text="tcp://m16.cloudmqtt.com:12163"
                 android:paddingTop="4dp"
                 android:textColor="@color/main_text_dark"
                 android:background="@null"
@@ -42,7 +45,6 @@
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name"
                 android:layout_marginStart="16dp"
-                android:text="ybkbleum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/hint"
@@ -64,7 +66,6 @@
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password"
                 android:layout_marginStart="16dp"
-                android:text="n56Hkf0WGTAO"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/hint"

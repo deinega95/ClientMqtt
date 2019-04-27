@@ -57,6 +57,7 @@ class ViewRouter @Inject constructor() {
 
     fun showAuthorizationActivity() {
         val intent = Intent(currentActivity, AuthorizationActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         currentActivity?.startActivity(intent)
     }
 

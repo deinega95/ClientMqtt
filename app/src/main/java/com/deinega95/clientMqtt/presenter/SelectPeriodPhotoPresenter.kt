@@ -81,7 +81,7 @@ class SelectPeriodPhotoPresenter @Inject constructor() : BasePresenter<ISelectPe
     fun onReadyClickListener() {
         val startTime = startDate.timeInMillis
         val endTime = endDate.timeInMillis
-        val topicWithPhoto = System.currentTimeMillis().toString()
+        val topicWithPhoto = "/${System.currentTimeMillis()}"
         if (endTime >= startTime) {
             mqttService.getPhotoByPeriod(topicWithPhoto, startTime, endTime)
             viewRouter.showPhotosByPeriodFragment()

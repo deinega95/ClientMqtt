@@ -17,7 +17,7 @@ class MqttService @Inject constructor() : Observable() {
 
     companion object {
         const val TOPIC = "/smart-house/devices"
-        const val SERVER_TOPIC = "/smart-house/camera"
+        const val SERVER_TOPIC = "/smart+-house/camera"
         const val PHOTO_BY_PERIOD_UPDATED = "PHOTO_BY_PERIOD_UPDATED"
     }
 
@@ -99,7 +99,7 @@ class MqttService @Inject constructor() : Observable() {
     }
 
     private fun parseMessage(message: Message) {
-        if (message.topic == topicPhotoByPeriod) {
+        if (message.topicForPhoto == topicPhotoByPeriod) {
             if (message.countAllPhotoByPeriod != null) {
                 countAllPhotoByPeriod = message.countAllPhotoByPeriod!!
             }
@@ -220,11 +220,12 @@ class MqttService @Inject constructor() : Observable() {
             type = "get_photo_by_period",
             startPeriod = startTime,
             endPeriod = endTime,
-            topic = topicWithPhoto
+            topicForPhoto = topicWithPhoto
         )
         val mes = gson.toJson(message)
         MyLog.show("send mes $mes")
-        client!!.publish(topicWithPhoto, mes.toByteArray(), 0, true)
+        MyLog.show("client = $client")
+        client!!.publish(SERVER_TOPIC, mes.toByteArray(), 0, true)
 
         subscribeToTopic(topicWithPhoto)
     }
