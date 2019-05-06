@@ -8,6 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="android:textColorSecondary">@color/main_text_light</item>
+
+        <item name="md_color_title">@color/main_text_dark</item>
+        <item name="md_color_content">@color/description_text</item>
     </style>
 
 </resources>
