@@ -47,5 +47,6 @@
     <string name="photo_from_camera">Фото с камеры</string>
     <string name="info_about_broker">Данные брокера</string>
     <string name="confirm_clear_message">Вы действительно хотите очистить список сообщений?</string>
+    <string name="photo_by_period">Фото за период</string>
 
 </resources>

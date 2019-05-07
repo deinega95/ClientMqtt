@@ -12,43 +12,46 @@
 
     <TextView
             android:id="@+id/startDateLabel"
-            android:layout_below="@id/toolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textColor="@color/main_text_dark"
             android:text="@string/start_period"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            android:layout_alignTop="@id/startDateTimeTV"
+            android:layout_alignBottom="@id/startDateTimeTV"
+            android:gravity="center_vertical"
     />
 
 
     <TextView
             android:id="@+id/startDateTimeTV"
+            android:layout_below="@id/toolbar"
             android:layout_toEndOf="@id/startDateLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textColor="@color/link_color"
             tools:text="Time 12:45"
-            android:layout_alignBottom="@id/startDateLabel"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            android:gravity="start|center_vertical"
     />
 
     <TextView
             android:id="@+id/endDateLabelTV"
-            android:layout_below="@id/startDateLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textColor="@color/main_text_dark"
             android:text="@string/end_period"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            android:layout_alignTop="@id/endDateTimeTV"
+            android:layout_alignBottom="@id/endDateTimeTV"
+            android:gravity="center_vertical"
     />
 
 
@@ -61,9 +64,10 @@
             android:textSize="16sp"
             android:textColor="@color/link_color"
             tools:text="Time 12:45"
-            android:layout_alignBottom="@id/endDateLabelTV"
+            android:layout_below="@id/startDateTimeTV"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="16dp"
+            android:gravity="start|center_vertical"
     />
 
 

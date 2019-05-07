@@ -28,7 +28,7 @@ class PhotosByPeriodFragment : BaseFragment(), IPhotosByPeriodFragment {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_photos_by_period, container, false)
-
+        setToolbar(R.string.photo_by_period, true, view)
         return view
     }
 

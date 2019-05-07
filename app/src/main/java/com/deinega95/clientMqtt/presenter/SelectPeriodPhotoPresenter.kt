@@ -28,8 +28,8 @@ class SelectPeriodPhotoPresenter @Inject constructor() : BasePresenter<ISelectPe
     }
 
     override fun viewDettached() {
-        startDate.clear()
-        endDate.clear()
+        startDate = Calendar.getInstance()
+        endDate = Calendar.getInstance()
     }
 
     fun onSelectStartDateClicked() {
