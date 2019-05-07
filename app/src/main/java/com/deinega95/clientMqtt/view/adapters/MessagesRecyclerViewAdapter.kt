@@ -65,7 +65,7 @@ class MessagesRecyclerViewAdapter : RecyclerView.Adapter<MessagesRecyclerViewAda
     }
 
 
-    fun setData(messages: ArrayList<Message>) {
+    fun setData(messages: List<Message>) {
         this.data = messages
         notifyDataSetChanged()
     }

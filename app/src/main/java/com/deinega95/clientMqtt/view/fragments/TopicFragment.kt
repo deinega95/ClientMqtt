@@ -2,6 +2,8 @@ package com.deinega95.clientMqtt.view.fragments
 
 import android.os.Bundle
 import android.view.*
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -68,9 +70,18 @@ class TopicFragment : GalleryFragment(), ITopicFragment {
         addTopic.setOnClickListener {
             presenter.onAddTopicClicked()
         }
+
+        clearMessagesBtn.setOnClickListener {
+            presenter.onClearMessagesClicked()
+        }
     }
 
-    override fun setMessage(messages: ArrayList<Message>) {
+    override fun setMessage(messages: List<Message>) {
+        if (messages.isEmpty()) {
+            clearMessagesBtn.visibility = INVISIBLE
+        } else {
+            clearMessagesBtn.visibility = VISIBLE
+        }
         messagesAdapter.setData(messages)
     }
 

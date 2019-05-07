@@ -1,6 +1,7 @@
 package com.deinega95.clientMqtt.services
 
 import android.content.Intent
+import androidx.annotation.StringRes
 import com.deinega95.clientMqtt.di.App
 import com.deinega95.clientMqtt.utils.MyLog
 import com.deinega95.clientMqtt.view.activities.AuthorizationActivity
@@ -62,6 +63,11 @@ class ViewRouter @Inject constructor() {
     }
 
     fun showConfirmDialog(text: String, callback: () -> Unit) {
+        currentActivity?.showConfirmDialog(text, callback)
+
+    }
+
+    fun showConfirmDialog(@StringRes text:  Int, callback: () -> Unit) {
         currentActivity?.showConfirmDialog(text, callback)
 
     }

@@ -5,6 +5,8 @@ import com.deinega95.clientMqtt.di.components.*
 import com.deinega95.clientMqtt.di.modules.AndroidModule
 import com.github.piasy.biv.BigImageViewer
 import com.github.piasy.biv.loader.glide.GlideImageLoader
+import io.realm.Realm
+import io.realm.RealmConfiguration
 
 
 class App : Application() {
@@ -56,6 +58,14 @@ class App : Application() {
         super.onCreate()
         instance = this
         BigImageViewer.initialize(GlideImageLoader.with(instance))
+
+        Realm.init(instance)
+        val realmConfig = RealmConfiguration.Builder()
+            .deleteRealmIfMigrationNeeded()
+            .name("mqtt-diplom-realm")
+            //    .inMemory()   /////when set,saving only for session
+            .build()
+        Realm.setDefaultConfiguration(realmConfig)
     }
 
     fun clear() {
@@ -64,5 +74,4 @@ class App : Application() {
         mainComponent = null
         authorizationComponent = null
     }
-
 }

@@ -1,6 +1,7 @@
 package com.deinega95.clientMqtt.view.activities
 
 import android.os.Bundle
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import com.afollestad.materialdialogs.MaterialDialog
 import com.deinega95.clientMqtt.R
@@ -53,6 +54,10 @@ abstract class BaseActivity : AppCompatActivity() {
             .message(text = error ?: "")
             .positiveButton(res = R.string.ok)
             .show()
+    }
+
+    fun showConfirmDialog(@StringRes text: Int, callback: () -> Unit) {
+        showConfirmDialog(applicationContext.getString(text), callback)
     }
 
     fun showConfirmDialog(text: String, callback: () -> Unit) {

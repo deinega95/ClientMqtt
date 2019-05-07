@@ -8,6 +8,7 @@ import com.deinega95.clientMqtt.model.Message
 import com.deinega95.clientMqtt.services.MqttService
 import com.deinega95.clientMqtt.services.MqttService.Companion.TOPIC
 import com.deinega95.clientMqtt.services.ViewRouter
+import com.deinega95.clientMqtt.storage.DbManager
 import com.deinega95.clientMqtt.utils.MyLog
 import com.deinega95.clientMqtt.view.fragments.interfaces.ITopicFragment
 import com.google.android.gms.tasks.OnCompleteListener
@@ -21,9 +22,12 @@ class TopicPresenter @Inject constructor() : BasePresenter<ITopicFragment>(), Ob
     lateinit var client: MqttService
     @Inject
     lateinit var viewRouter: ViewRouter
+    @Inject
+    lateinit var dbManager: DbManager
 
 
     override fun viewAttached() {
+        view?.setMessage(dbManager.getMessages())
         client.connect { isConnect, error ->
             if (isConnect) {
                 client.addObserver(this)
@@ -59,14 +63,19 @@ class TopicPresenter @Inject constructor() : BasePresenter<ITopicFragment>(), Ob
 
 
     fun onSendClicked(message: String) {
-        val mes = Message(type = "text", text = message, time = System.currentTimeMillis(), id = System.currentTimeMillis())
+        val mes = Message().apply {
+            type = "text"
+            text = message
+            time = System.currentTimeMillis()
+            id = System.currentTimeMillis()
+        }
         client.sendMessage(mes)
     }
 
     override fun update(o: Observable?, arg: Any?) {
-        MyLog.show("update $this")
-        if (arg is ArrayList<*>)
-            view?.setMessage(arg as ArrayList<Message>)
+        MyLog.show("update $arg")
+        if (arg is List<*>)
+            view?.setMessage(arg as List<Message>)
 
     }
 
@@ -114,5 +123,10 @@ class TopicPresenter @Inject constructor() : BasePresenter<ITopicFragment>(), Ob
         viewRouter.startPhotosActivity()
     }
 
-
+    fun onClearMessagesClicked() {
+        viewRouter.showConfirmDialog(R.string.confirm_clear_message) {
+            dbManager.clearDb()
+            client.clearMessages()
+        }
+    }
 }

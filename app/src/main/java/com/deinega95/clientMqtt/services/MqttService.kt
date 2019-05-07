@@ -2,6 +2,7 @@ package com.deinega95.clientMqtt.services
 
 import com.deinega95.clientMqtt.di.App
 import com.deinega95.clientMqtt.model.Message
+import com.deinega95.clientMqtt.storage.DbManager
 import com.deinega95.clientMqtt.storage.PrefsManager
 import com.deinega95.clientMqtt.utils.MyLog
 import com.google.gson.Gson
@@ -25,10 +26,12 @@ class MqttService @Inject constructor() : Observable() {
     lateinit var gson: Gson
     @Inject
     lateinit var prefsManager: PrefsManager
+    @Inject
+    lateinit var dbManager: DbManager
 
     val topics = mutableSetOf<String>()
     var client: MqttAndroidClient? = null
-    private val messages = mutableListOf<Message>()
+    private val messages = mutableSetOf<Message>()
     val photoByPeriod = mutableListOf<Message>()
     var countAllPhotoByPeriod = 0
     private var topicPhotoByPeriod: String? = null
@@ -38,6 +41,10 @@ class MqttService @Inject constructor() : Observable() {
     //var broker = "tcp://192.168.43.100:1883"
 
     fun connect(delegate: (isConnect: Boolean, error: String?) -> Unit = { _, _ -> }) {
+        if (messages.isEmpty()){
+            val existMess = dbManager.getMessages()
+            messages.addAll(existMess)
+        }
         initClient()
         val options = createOptions()
         val listener = createMqttListener(delegate)
@@ -107,9 +114,11 @@ class MqttService @Inject constructor() : Observable() {
             setChanged()
             notifyObservers(PHOTO_BY_PERIOD_UPDATED)
         } else {
+            MyLog.show("!!!messages.contains(message)=${messages.contains(message)}'''${message.hashCode()}/// ${message.id}")
+            dbManager.addMessage(message)
             messages.add(message)
             setChanged()
-            notifyObservers(messages)
+            notifyObservers(messages.toList())
         }
     }
 
@@ -216,17 +225,23 @@ class MqttService @Inject constructor() : Observable() {
         photoByPeriod.clear()
         topicPhotoByPeriod = topicWithPhoto
 
-        val message = Message(
-            type = "get_photo_by_period",
-            startPeriod = startTime,
-            endPeriod = endTime,
+        val message = Message().apply {
+            type = "get_photo_by_period"
+            startPeriod = startTime
+            endPeriod = endTime
             topicForPhoto = topicWithPhoto
-        )
+        }
         val mes = gson.toJson(message)
         MyLog.show("send mes $mes")
         MyLog.show("client = $client")
         client!!.publish(SERVER_TOPIC, mes.toByteArray(), 0, true)
 
         subscribeToTopic(topicWithPhoto)
+    }
+
+    fun clearMessages() {
+        messages.clear()
+        setChanged()
+        notifyObservers(messages.toList())
     }
 }
