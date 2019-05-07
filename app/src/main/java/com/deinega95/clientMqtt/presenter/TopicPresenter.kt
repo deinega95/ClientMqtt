@@ -8,7 +8,6 @@ import com.deinega95.clientMqtt.model.Message
 import com.deinega95.clientMqtt.services.MqttService
 import com.deinega95.clientMqtt.services.MqttService.Companion.TOPIC
 import com.deinega95.clientMqtt.services.ViewRouter
-import com.deinega95.clientMqtt.storage.PrefsManager
 import com.deinega95.clientMqtt.utils.MyLog
 import com.deinega95.clientMqtt.view.fragments.interfaces.ITopicFragment
 import com.google.android.gms.tasks.OnCompleteListener
@@ -20,8 +19,6 @@ import javax.inject.Inject
 class TopicPresenter @Inject constructor() : BasePresenter<ITopicFragment>(), Observer {
     @Inject
     lateinit var client: MqttService
-    @Inject
-    lateinit var prefsManager: PrefsManager
     @Inject
     lateinit var viewRouter: ViewRouter
 
@@ -58,12 +55,11 @@ class TopicPresenter @Inject constructor() : BasePresenter<ITopicFragment>(), Ob
 
     override fun viewDettached() {
         client.deleteObserver(this)
-        client.clear()
     }
 
 
     fun onSendClicked(message: String) {
-        val mes = Message(type = "text", text = message, time = System.currentTimeMillis(), id = 1)
+        val mes = Message(type = "text", text = message, time = System.currentTimeMillis(), id = System.currentTimeMillis())
         client.sendMessage(mes)
     }
 

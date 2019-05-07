@@ -99,7 +99,7 @@ class MqttService @Inject constructor() : Observable() {
     }
 
     private fun parseMessage(message: Message) {
-        if (message.topicForPhoto == topicPhotoByPeriod) {
+        if (topicPhotoByPeriod != null && message.topicForPhoto == topicPhotoByPeriod) {
             if (message.countAllPhotoByPeriod != null) {
                 countAllPhotoByPeriod = message.countAllPhotoByPeriod!!
             }
@@ -169,7 +169,7 @@ class MqttService @Inject constructor() : Observable() {
     fun sendMessage(message: Message) {
         val mes = gson.toJson(message)
         MyLog.show("send mes")
-        client!!.publish(TOPIC, mes.toByteArray(), 2, true)
+        client!!.publish(TOPIC, mes.toByteArray(), 0, false)
     }
 
     fun sendFirebaseToken(token: String) {
