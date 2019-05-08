@@ -5,13 +5,14 @@ import com.deinega95.clientMqtt.di.App
 import com.deinega95.clientMqtt.di.scopes.PhotoByPeriodScope
 import com.deinega95.clientMqtt.services.MqttService
 import com.deinega95.clientMqtt.services.ViewRouter
+import com.deinega95.clientMqtt.utils.MyLog
 import com.deinega95.clientMqtt.utils.toDateWithYear
 import com.deinega95.clientMqtt.view.fragments.interfaces.ISelectPeriodPhotoFragment
 import java.util.*
 import javax.inject.Inject
 
 @PhotoByPeriodScope
-class SelectPeriodPhotoPresenter @Inject constructor() : BasePresenter<ISelectPeriodPhotoFragment>() {
+class SelectPeriodPhotoPresenter @Inject constructor() : BasePresenter<ISelectPeriodPhotoFragment>(), Observer {
 
     @Inject
     lateinit var mqttService: MqttService
@@ -23,11 +24,13 @@ class SelectPeriodPhotoPresenter @Inject constructor() : BasePresenter<ISelectPe
 
 
     override fun viewAttached() {
+        mqttService.addObserver(this)
         updateStartDate()
         updateEndDate()
     }
 
     override fun viewDettached() {
+        mqttService.deleteObserver(this)
         startDate = Calendar.getInstance()
         endDate = Calendar.getInstance()
     }
@@ -84,9 +87,19 @@ class SelectPeriodPhotoPresenter @Inject constructor() : BasePresenter<ISelectPe
         val topicWithPhoto = "/${System.currentTimeMillis()}"
         if (endTime >= startTime) {
             mqttService.getPhotoByPeriod(topicWithPhoto, startTime, endTime)
-            viewRouter.showPhotosByPeriodFragment()
         } else {
             viewRouter.showError(App.instance.getString(R.string.start_date_more_end_date_error))
+        }
+    }
+
+    override fun update(o: Observable?, arg: Any?) {
+        if (arg is Int){
+            MyLog.show("update selectPhotoPeriod $arg")
+            if (arg == 0){
+                viewRouter.showMessage(R.string.not_exist_photo_by_selected_period)
+            }else{
+                viewRouter.showPhotosByPeriodFragment()
+            }
         }
     }
 }

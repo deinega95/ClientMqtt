@@ -89,4 +89,8 @@ class ViewRouter @Inject constructor() {
         currentActivity?.replaceFragment(ImageViewerFragment.newInstance(photoId))
     }
 
+    fun showMessage(@StringRes text: Int) {
+        currentActivity?.showMessage(text)
+    }
+
 }

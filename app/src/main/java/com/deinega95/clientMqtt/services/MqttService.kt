@@ -41,7 +41,7 @@ class MqttService @Inject constructor() : Observable() {
     //var broker = "tcp://192.168.43.100:1883"
 
     fun connect(delegate: (isConnect: Boolean, error: String?) -> Unit = { _, _ -> }) {
-        if (messages.isEmpty()){
+        if (messages.isEmpty()) {
             val existMess = dbManager.getMessages()
             messages.addAll(existMess)
         }
@@ -109,10 +109,13 @@ class MqttService @Inject constructor() : Observable() {
         if (topicPhotoByPeriod != null && message.topicForPhoto == topicPhotoByPeriod) {
             if (message.countAllPhotoByPeriod != null) {
                 countAllPhotoByPeriod = message.countAllPhotoByPeriod!!
+                setChanged()
+                notifyObservers(countAllPhotoByPeriod)
+            } else {
+                photoByPeriod.add(message)
+                setChanged()
+                notifyObservers(PHOTO_BY_PERIOD_UPDATED)
             }
-            photoByPeriod.add(message)
-            setChanged()
-            notifyObservers(PHOTO_BY_PERIOD_UPDATED)
         } else {
             MyLog.show("!!!messages.contains(message)=${messages.contains(message)}'''${message.hashCode()}/// ${message.id}")
             dbManager.addMessage(message)
@@ -233,7 +236,6 @@ class MqttService @Inject constructor() : Observable() {
         }
         val mes = gson.toJson(message)
         MyLog.show("send mes $mes")
-        MyLog.show("client = $client")
         client!!.publish(SERVER_TOPIC, mes.toByteArray(), 0, true)
 
         subscribeToTopic(topicWithPhoto)

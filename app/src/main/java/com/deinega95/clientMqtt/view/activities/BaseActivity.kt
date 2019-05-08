@@ -69,6 +69,12 @@ abstract class BaseActivity : AppCompatActivity() {
             })
             .negativeButton(res = R.string.cancel)
             .show()
+    }
 
+    fun showMessage(text: Int) {
+        MaterialDialog(this)
+            .message(text)
+            .positiveButton(res = R.string.ok)
+            .show()
     }
 }
