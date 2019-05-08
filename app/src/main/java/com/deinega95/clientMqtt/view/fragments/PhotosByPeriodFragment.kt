@@ -56,8 +56,8 @@ class PhotosByPeriodFragment : BaseFragment(), IPhotosByPeriodFragment {
     }
 
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         presenter.viewDied(this)
     }
 }

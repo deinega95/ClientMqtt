@@ -41,8 +41,8 @@ class InputServerFragment : BaseFragment(), IInputServerFragment {
         this.password.setText(password)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         presenter.viewDied(this)
     }
 }

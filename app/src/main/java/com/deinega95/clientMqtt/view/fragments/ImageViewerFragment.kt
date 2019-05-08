@@ -72,8 +72,8 @@ class ImageViewerFragment : BaseFragment(), IImageViewerFragment {
         }
     }
 
-    override fun onDestroy() {
-        presenter.viewDied(this)
+    override fun onDestroyView() {
+        super.onDestroyView()
         super.onDestroy()
     }
 }
