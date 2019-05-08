@@ -1,6 +1,5 @@
 package com.deinega95.clientMqtt.view.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -78,7 +77,6 @@ class MessagesRecyclerViewAdapter : RecyclerView.Adapter<MessagesRecyclerViewAda
 
         override fun bind(pos: Int) {
             val mes = data[pos]
-            Log.e("bind", mes.text)
             itemView.message.text = mes.text
             if (mes.time != null)
                 itemView.date.text = mes.time!!.toDate()
@@ -88,7 +86,7 @@ class MessagesRecyclerViewAdapter : RecyclerView.Adapter<MessagesRecyclerViewAda
     inner class ImageViewHolder(v: View) : MyViewHolder(v) {
         init {
             itemView.setOnClickListener {
-                //     presenter.onItemClicked(data[adapterPosition])
+                presenter.onImageClicked(data[adapterPosition])
             }
         }
 

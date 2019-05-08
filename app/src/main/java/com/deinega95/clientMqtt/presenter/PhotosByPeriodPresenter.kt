@@ -5,6 +5,7 @@ import com.deinega95.clientMqtt.model.Message
 import com.deinega95.clientMqtt.services.MqttService
 import com.deinega95.clientMqtt.services.MqttService.Companion.PHOTO_BY_PERIOD_UPDATED
 import com.deinega95.clientMqtt.services.ViewRouter
+import com.deinega95.clientMqtt.view.fragments.ImageViewerFragment.Companion.ImageViewerTypeEnum.PhotoByPeriod
 import com.deinega95.clientMqtt.view.fragments.interfaces.IPhotosByPeriodFragment
 import java.util.*
 import javax.inject.Inject
@@ -36,6 +37,6 @@ class PhotosByPeriodPresenter @Inject constructor() : BasePresenter<IPhotosByPer
     }
 
     fun onItemClicked(message: Message) {
-        viewRouter.showImageViewer(message.id!!)
+        viewRouter.showImageViewer(PhotoByPeriod, message.id!!)
     }
 }

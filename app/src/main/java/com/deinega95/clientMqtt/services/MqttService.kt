@@ -31,7 +31,8 @@ class MqttService @Inject constructor() : Observable() {
 
     val topics = mutableSetOf<String>()
     var client: MqttAndroidClient? = null
-    private val messages = mutableSetOf<Message>()
+    val messages = mutableSetOf<Message>()
+
     val photoByPeriod = mutableListOf<Message>()
     var countAllPhotoByPeriod = 0
     private var topicPhotoByPeriod: String? = null
@@ -90,7 +91,8 @@ class MqttService @Inject constructor() : Observable() {
                     parseMessage(message)
 
                 } catch (ex: Exception) {
-                    MyLog.show("Exception in message")
+                    MyLog.show("Exception in message ${ex.printStackTrace()}")
+                    MyLog.show("Exception in message ${ex.localizedMessage}")
                 }
             }
 

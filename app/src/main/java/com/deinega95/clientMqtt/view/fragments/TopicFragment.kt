@@ -6,6 +6,7 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
@@ -31,6 +32,8 @@ class TopicFragment : GalleryFragment(), ITopicFragment {
     private lateinit var topicsAdapter: TopicRecyclerViewAdapter
     private var messageET: TextInputEditText? = null
 
+    private var clearMessage: ImageView? = null
+
     init {
         App.instance.mainComponent?.inject(this)
     }
@@ -45,6 +48,8 @@ class TopicFragment : GalleryFragment(), ITopicFragment {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         messageET = message
+
+        clearMessage = clearMessagesBtn
         initList()
 
         presenter.viewReady(this)
@@ -71,16 +76,16 @@ class TopicFragment : GalleryFragment(), ITopicFragment {
             presenter.onAddTopicClicked()
         }
 
-        clearMessagesBtn.setOnClickListener {
+        clearMessage?.setOnClickListener {
             presenter.onClearMessagesClicked()
         }
     }
 
     override fun setMessage(messages: List<Message>) {
         if (messages.isEmpty()) {
-            clearMessagesBtn.visibility = INVISIBLE
+            clearMessage?.visibility = INVISIBLE
         } else {
-            clearMessagesBtn.visibility = VISIBLE
+            clearMessage?.visibility = VISIBLE
         }
         messagesAdapter.setData(messages)
     }
@@ -154,11 +159,10 @@ class TopicFragment : GalleryFragment(), ITopicFragment {
                 }
             }
         }
-
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
         presenter.viewDied(this)
+        super.onDestroy()
     }
 }

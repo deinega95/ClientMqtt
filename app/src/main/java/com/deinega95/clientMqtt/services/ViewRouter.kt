@@ -85,8 +85,8 @@ class ViewRouter @Inject constructor() {
         currentActivity?.onBackPressed()
     }
 
-    fun showImageViewer(photoId: Long) {
-        currentActivity?.replaceFragment(ImageViewerFragment.newInstance(photoId))
+    fun showImageViewer(type: ImageViewerFragment.Companion.ImageViewerTypeEnum, photoId: Long) {
+        currentActivity?.replaceFragment(ImageViewerFragment.newInstance(type,photoId))
     }
 
     fun showMessage(@StringRes text: Int) {

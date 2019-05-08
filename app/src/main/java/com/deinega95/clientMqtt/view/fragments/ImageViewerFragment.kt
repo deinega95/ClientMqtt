@@ -27,9 +27,13 @@ class ImageViewerFragment : BaseFragment(), IImageViewerFragment {
     }
 
     companion object {
-        fun newInstance(photoId: Long): ImageViewerFragment {
+        enum class ImageViewerTypeEnum {
+            PhotoByPeriod, Message
+        }
+
+        fun newInstance(type:ImageViewerTypeEnum, photoId: Long): ImageViewerFragment {
             val fr = ImageViewerFragment()
-            fr.presenter.setParams(photoId)
+            fr.presenter.setParams(type, photoId)
             return fr
         }
 

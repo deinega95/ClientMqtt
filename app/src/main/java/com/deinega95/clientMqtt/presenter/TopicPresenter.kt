@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import java.util.*
 import javax.inject.Inject
+import com.deinega95.clientMqtt.view.fragments.ImageViewerFragment.Companion.ImageViewerTypeEnum.Message as Mes
 
 @MainScope
 class TopicPresenter @Inject constructor() : BasePresenter<ITopicFragment>(), Observer {
@@ -27,6 +28,7 @@ class TopicPresenter @Inject constructor() : BasePresenter<ITopicFragment>(), Ob
 
 
     override fun viewAttached() {
+        MyLog.show("!!prese viewAttached")
         view?.setMessage(dbManager.getMessages())
         client.connect { isConnect, error ->
             if (isConnect) {
@@ -58,6 +60,7 @@ class TopicPresenter @Inject constructor() : BasePresenter<ITopicFragment>(), Ob
 
 
     override fun viewDettached() {
+        MyLog.show("!!prese viewDettached")
         client.deleteObserver(this)
     }
 
@@ -89,7 +92,6 @@ class TopicPresenter @Inject constructor() : BasePresenter<ITopicFragment>(), Ob
 
     fun getPhotoClicked() {
         view?.showSelectGetPhotoDialog()
-        //view!!.showPhotosDialog()
     }
 
     fun exitClicked() {
@@ -128,5 +130,9 @@ class TopicPresenter @Inject constructor() : BasePresenter<ITopicFragment>(), Ob
             dbManager.clearDb()
             client.clearMessages()
         }
+    }
+
+    fun onImageClicked(message: Message) {
+        viewRouter.showImageViewer(Mes, message.id!!)
     }
 }
