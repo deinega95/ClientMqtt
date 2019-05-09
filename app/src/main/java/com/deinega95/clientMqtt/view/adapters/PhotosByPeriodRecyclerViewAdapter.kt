@@ -2,6 +2,8 @@ package com.deinega95.clientMqtt.view.adapters
 
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.deinega95.clientMqtt.R
@@ -83,6 +85,11 @@ class PhotosByPeriodRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.View
         fun bind() {
             itemView.allPhotosTV.text =
                 itemView.context.getString(R.string.geted_photo_from) + " ${data.size} / $allPhoto"
+            if (data.size == allPhoto) {
+                itemView.progressBar.visibility = GONE
+            } else {
+                itemView.progressBar.visibility = VISIBLE
+            }
         }
     }
 }

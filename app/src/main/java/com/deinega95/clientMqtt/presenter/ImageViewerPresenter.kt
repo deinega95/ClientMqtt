@@ -16,14 +16,13 @@ class ImageViewerPresenter @Inject constructor() : BasePresenter<IImageViewerFra
     @Inject
     lateinit var mqttService: MqttService
 
-
     private var photoId: Long? = null
     private var type: ImageViewerFragment.Companion.ImageViewerTypeEnum? = null
 
     override fun viewAttached() {
         val images = when (type) {
-            ImageViewerFragment.Companion.ImageViewerTypeEnum.PhotoByPeriod -> mqttService.photoByPeriod
-            ImageViewerFragment.Companion.ImageViewerTypeEnum.Message -> mqttService.messages.filter { it.type == "image" }
+            ImageViewerFragment.Companion.ImageViewerTypeEnum.PhotoByPeriod -> mqttService.photoByPeriod.toList()
+            ImageViewerFragment.Companion.ImageViewerTypeEnum.Message -> mqttService.messages.filter { it.type == "image" }.toList()
             null -> throw RuntimeException("invalid type in imageviewer")
         }
 

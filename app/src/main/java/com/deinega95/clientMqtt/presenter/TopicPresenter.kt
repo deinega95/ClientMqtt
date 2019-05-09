@@ -44,14 +44,16 @@ class TopicPresenter @Inject constructor() : BasePresenter<ITopicFragment>(), Ob
     }
 
     private fun sendFirebaseToken() {
+        MyLog.show("!!!!sendFirebaseToken in topicpres")
         FirebaseInstanceId.getInstance().instanceId
             .addOnCompleteListener(OnCompleteListener { task ->
+                MyLog.show("!!!!task.isSuccessful=${task.isSuccessful}")
                 if (!task.isSuccessful) {
                     return@OnCompleteListener
                 }
 
                 val token = task.result?.token
-                Log.d("!!", token)
+                MyLog.show("!!!token= $token")
                 if (token != null) {
                     client.sendFirebaseToken(token)
                 }

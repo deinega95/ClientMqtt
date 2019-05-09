@@ -18,7 +18,7 @@ class MqttService @Inject constructor() : Observable() {
 
     companion object {
         const val TOPIC = "/smart-house/devices"
-        const val SERVER_TOPIC = "/smart+-house/camera"
+        const val SERVER_TOPIC = "/smart-house/camera"
         const val PHOTO_BY_PERIOD_UPDATED = "PHOTO_BY_PERIOD_UPDATED"
     }
 
@@ -190,6 +190,7 @@ class MqttService @Inject constructor() : Observable() {
         val tokenMes = Message()
         tokenMes.type = "tokenFirebase"
         tokenMes.text = token
+        tokenMes.id = System.currentTimeMillis()
 
         val message = gson.toJson(tokenMes)
         client!!.publish(SERVER_TOPIC, message.toByteArray(), 2, true)
@@ -231,6 +232,7 @@ class MqttService @Inject constructor() : Observable() {
         topicPhotoByPeriod = topicWithPhoto
 
         val message = Message().apply {
+            id = System.currentTimeMillis()
             type = "get_photo_by_period"
             startPeriod = startTime
             endPeriod = endTime
@@ -238,9 +240,9 @@ class MqttService @Inject constructor() : Observable() {
         }
         val mes = gson.toJson(message)
         MyLog.show("send mes $mes")
-        client!!.publish(SERVER_TOPIC, mes.toByteArray(), 0, true)
 
         subscribeToTopic(topicWithPhoto)
+        client!!.publish(SERVER_TOPIC, mes.toByteArray(), 0, true)
     }
 
     fun clearMessages() {

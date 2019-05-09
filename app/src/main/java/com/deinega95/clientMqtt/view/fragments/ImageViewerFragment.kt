@@ -31,19 +31,16 @@ class ImageViewerFragment : BaseFragment(), IImageViewerFragment {
             PhotoByPeriod, Message
         }
 
-        fun newInstance(type:ImageViewerTypeEnum, photoId: Long): ImageViewerFragment {
+        fun newInstance(type: ImageViewerTypeEnum, photoId: Long): ImageViewerFragment {
             val fr = ImageViewerFragment()
             fr.presenter.setParams(type, photoId)
             return fr
         }
-
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (fragmentView == null) {
             fragmentView = inflater.inflate(R.layout.fragment_image_viewer, container, false)
-
         }
         return fragmentView
     }
@@ -76,8 +73,8 @@ class ImageViewerFragment : BaseFragment(), IImageViewerFragment {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        presenter.viewDied(this)
         super.onDestroy()
     }
 }
