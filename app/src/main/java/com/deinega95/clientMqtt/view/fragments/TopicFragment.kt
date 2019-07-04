@@ -161,8 +161,8 @@ class TopicFragment : GalleryFragment(), ITopicFragment {
         }
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         presenter.viewDied(this)
-        super.onDestroy()
+        super.onDestroyView()
     }
 }
