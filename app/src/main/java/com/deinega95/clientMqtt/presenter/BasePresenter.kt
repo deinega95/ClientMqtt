@@ -9,8 +9,10 @@ abstract class BasePresenter<V> {
     }
 
     fun viewDied(view:V){
-        this.view = view
-        viewDettached()
+        if (this.view == view){
+           this.view = null
+           viewDettached()
+         }
     }
 
     abstract fun viewDettached()
