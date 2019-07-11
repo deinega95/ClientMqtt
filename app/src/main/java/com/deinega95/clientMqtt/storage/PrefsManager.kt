@@ -34,7 +34,7 @@ class PrefsManager @Inject constructor() {
         return sharedPreferences.getString(USERNAME, null)
     }
 
-    fun saveServer(server: String,username:String?, pass:String?) {
+    fun saveServer(server: String, username: String?, pass: String?) {
         sharedPreferences
             .edit()
             .putString(SERVER, server)
@@ -44,7 +44,7 @@ class PrefsManager @Inject constructor() {
     }
 
     fun isAuthorized(): Boolean {
-        return (getServer()!=null && getUsername()!=null)
+        return (getServer() != null && getUsername() != null)
     }
 
     fun getPassword(): String? {

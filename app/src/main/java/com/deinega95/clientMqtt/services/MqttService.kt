@@ -141,11 +141,11 @@ class MqttService @Inject constructor() : Observable() {
         val options = MqttConnectOptions()
         options.mqttVersion = MqttConnectOptions.MQTT_VERSION_3_1
         options.isCleanSession = false
-        prefsManager.getUsername()?.apply {
-            options.userName = this
+        if (prefsManager.getUsername()?.isNotEmpty() == true) {
+            options.userName = prefsManager.getUsername()
         }
-        prefsManager.getPassword()?.apply {
-            options.password = this.toCharArray()
+        if (prefsManager.getPassword()?.isNotEmpty() == true) {
+            options.password = prefsManager.getPassword()!!.toCharArray()
         }
         options.isAutomaticReconnect = true
         MyLog.show("options = ${options.toString()}")

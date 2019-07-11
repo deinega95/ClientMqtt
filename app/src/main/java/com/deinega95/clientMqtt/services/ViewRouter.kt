@@ -49,6 +49,9 @@ class ViewRouter @Inject constructor() {
     fun showError(error: String?) {
         currentActivity?.showErrorMessage(error)
     }
+    fun showError(@StringRes error: Int) {
+        currentActivity?.showErrorMessage(currentActivity?.applicationContext?.getString(error))
+    }
 
     fun showMainActivity() {
         val intent = Intent(currentActivity, MainActivity::class.java)

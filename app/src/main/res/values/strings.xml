@@ -49,5 +49,6 @@
     <string name="confirm_clear_message">Вы действительно хотите очистить список сообщений?</string>
     <string name="photo_by_period">Фото за период</string>
     <string name="not_exist_photo_by_selected_period">Нет фотографий за выбраный промежуток времени.</string>
+    <string name="enter_server">Введите адрес брокера</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.deinega95.clientMqtt.presenter
 
+import com.deinega95.clientMqtt.R
 import com.deinega95.clientMqtt.di.scopes.AuthorizationScope
 import com.deinega95.clientMqtt.services.MqttService
 import com.deinega95.clientMqtt.services.ViewRouter
@@ -22,15 +23,19 @@ class InputServerPresenter @Inject constructor() : BasePresenter<IInputServerFra
         view?.setContent(prefsManager.getServer(), prefsManager.getUsername(), prefsManager.getPassword())
     }
 
-    fun onConnectClicked(address: String, username: String, password:String) {
-        prefsManager.saveServer(address, username, password)
+    fun onConnectClicked(address: String, username: String, password: String) {
+        if (address.isNotEmpty()) {
+            prefsManager.saveServer(address, username, password)
 
-        client.connect { isSuccess, mess ->
-            if (isSuccess) {
-               viewRouter.showMainActivity()
-            } else {
-                viewRouter.showError(mess)
+            client.connect { isSuccess, mess ->
+                if (isSuccess) {
+                    viewRouter.showMainActivity()
+                } else {
+                    viewRouter.showError(mess)
+                }
             }
+        } else {
+            viewRouter.showError(R.string.enter_server)
         }
     }
 
